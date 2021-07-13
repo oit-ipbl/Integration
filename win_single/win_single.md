@@ -77,72 +77,11 @@ if __name__ == '__main__':
     main()
 ```
 
-### Run
+### Make a ROS node
 
-#### ROS side
+Open `~/catkin_ws/src/oit_pbl_ros_samples/` by Visual Studio Code editor, and edit `communication_test.py`. See [Developing inside the ROS container with VSCode](https://github.com/oit-ipbl/portal/blob/main/setup/remote_with_vscode.md).
 
-At first, launch the simulator.
-
-```shell
-$ roslaunch oit_stage_ros navigation.launch
-```
-
-After a while run the `communication_with_win_sample_01.py`.
-
-```shell
-$ rosrun oit_pbl_ros_samples communication_with_win_sample_01.py
-```
-
-#### Run windows side program within about 10 seconds
-
-- Windows side console output.
-
-```cmd
-C:\oit\py21\code>python ./communication_with_ros_sample_01.py
-{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 0'}, 'op': 'publish'}
-{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 1'}, 'op': 'publish'}
-{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 2'}, 'op': 'publish'}
-{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 3'}, 'op': 'publish'}
-{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 4'}, 'op': 'publish'}
-{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 5'}, 'op': 'publish'}
-{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 6'}, 'op': 'publish'}
-{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 7'}, 'op': 'publish'}
-{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 8'}, 'op': 'publish'}
-{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 9'}, 'op': 'publish'}
-Sending ros message: {'op': 'publish', 'topic': '/from_windows', 'msg': {'data': 'Hello this is windows 0'}}
-Sending ros message: {'op': 'publish', 'topic': '/from_windows', 'msg': {'data': 'Hello this is windows 1'}}
-Sending ros message: {'op': 'publish', 'topic': '/from_windows', 'msg': {'data': 'Hello this is windows 2'}}
-Sending ros message: {'op': 'publish', 'topic': '/from_windows', 'msg': {'data': 'Hello this is windows 3'}}
-Sending ros message: {'op': 'publish', 'topic': '/from_windows', 'msg': {'data': 'Hello this is windows 4'}}
-Sending ros message: {'op': 'publish', 'topic': '/from_windows', 'msg': {'data': 'Hello this is windows 5'}}
-Sending ros message: {'op': 'publish', 'topic': '/from_windows', 'msg': {'data': 'Hello this is windows 6'}}
-Sending ros message: {'op': 'publish', 'topic': '/from_windows', 'msg': {'data': 'Hello this is windows 7'}}
-Sending ros message: {'op': 'publish', 'topic': '/from_windows', 'msg': {'data': 'Hello this is windows 8'}}
-Sending ros message: {'op': 'publish', 'topic': '/from_windows', 'msg': {'data': 'Hello this is windows 9'}}
-```
-
-- ROS side terminal output.
-
-```shell
-$ rosrun oit_pbl_ros_samples communication_with_win_sample_01.py 
-[INFO] [1626173639.498166, 38.800000]: /communication_with_win_sample_01:Started
-[INFO] [1626173639.814206, 39.100000]: /communication_with_win_sample_01:The server move_base comes up
-[INFO] [1626173639.815497, 39.100000]: /communication_with_win_sample_01:Sending goal
-[INFO] [1626173653.610203, 52.900000]: /communication_with_win_sample_01:Finished: (3)
-[INFO] [1626173669.637060, 68.900000]: /communication_with_win_sample_01:Receive from win(0):Hello this is windows 2
-[INFO] [1626173670.645778, 69.900000]: /communication_with_win_sample_01:Receive from win(1):Hello this is windows 3
-[INFO] [1626173671.645056, 70.900000]: /communication_with_win_sample_01:Receive from win(2):Hello this is windows 4
-[INFO] [1626173672.643695, 71.900000]: /communication_with_win_sample_01:Receive from win(3):Hello this is windows 5
-[INFO] [1626173673.644215, 72.900000]: /communication_with_win_sample_01:Receive from win(4):Hello this is windows 6
-[INFO] [1626173674.653763, 73.900000]: /communication_with_win_sample_01:Receive from win(5):Hello this is windows 7
-[INFO] [1626173675.654142, 74.900000]: /communication_with_win_sample_01:Receive from win(6):Hello this is windows 8
-[INFO] [1626173676.654058, 75.900000]: /communication_with_win_sample_01:Receive from win(7):Hello this is windows 9
-[INFO] [1626173680.670933, 79.900000]: /communication_with_win_sample_01:Exiting
-```
-
-### Overview of the programs
-
-Open the ros program, `~/catkin_ws/src/oit_pbl_ros_samples/scripts/communication_with_win_sample_01.py`, and check it.
+Type the following template. It's OK copy and paste.
 
 ```python
 #!/usr/bin/env python
@@ -159,21 +98,11 @@ from geometry_msgs.msg import Quaternion
 from utils import navigation, wait_string_message
 
 
-class CommunicationWithWinSampleNode(object):
+class CommunicationTestNode(object):
     def __init__(self, topic_name_from_win, topic_name_from_ros, topic_name_cmd_vel, move_base_name="move_base"):
         self.topic_name_from_win = topic_name_from_win
         self.to_win_pub = rospy.Publisher(
             topic_name_from_ros, String, queue_size=1)
-        self.cmd_vel_pub = rospy.Publisher(
-            topic_name_cmd_vel, Twist, queue_size=1)
-        self.move_base_name = move_base_name
-        self.twist = Twist()
-        self.twist.linear.x = 0.0
-        self.twist.linear.y = 0.0
-        self.twist.linear.z = 0.0
-        self.twist.angular.x = 0.0
-        self.twist.angular.y = 0.0
-        self.twist.angular.z = 0.0
 
     def process(self):
         sleep_time = 1
@@ -207,7 +136,7 @@ def main():
     rospy.init_node(os.path.splitext(script_name)[0])
     rospy.sleep(0.5)  # rospy.Time.now() returns 0, without this sleep.
 
-    node = CommunicationWithWinSampleNode(
+    node = CommunicationTestNode(
         "/from_windows", "/from_ros", "/cmd_vel")
     rospy.loginfo("%s:Started", rospy.get_name())
 
@@ -222,6 +151,75 @@ if __name__ == '__main__':
         rospy.logerr("%s:%s", rospy.get_name(), str(e))
         exit(1)
 ```
+
+### Run
+
+#### ROS side
+
+At first, launch the simulator.
+
+```shell
+$ roslaunch oit_stage_ros navigation.launch
+```
+
+After a while run a sample program, `communication_test.py`.
+
+```shell
+$ rosrun oit_pbl_ros_samples communication_test.py.py
+```
+
+#### Run windows side program within about 10 seconds
+
+```cmd
+C:\oit\py21\code>python ./communication_with_ros_sample_01.py
+```
+
+- Windows side console output.
+
+```cmd
+C:\oit\py21\code>python ./communication_with_ros_sample_01.py
+{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 0'}, 'op': 'publish'}
+{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 1'}, 'op': 'publish'}
+{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 2'}, 'op': 'publish'}
+{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 3'}, 'op': 'publish'}
+{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 4'}, 'op': 'publish'}
+{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 5'}, 'op': 'publish'}
+{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 6'}, 'op': 'publish'}
+{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 7'}, 'op': 'publish'}
+{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 8'}, 'op': 'publish'}
+{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 9'}, 'op': 'publish'}
+Sending ros message: {'op': 'publish', 'topic': '/from_windows', 'msg': {'data': 'Hello this is windows 0'}}
+Sending ros message: {'op': 'publish', 'topic': '/from_windows', 'msg': {'data': 'Hello this is windows 1'}}
+Sending ros message: {'op': 'publish', 'topic': '/from_windows', 'msg': {'data': 'Hello this is windows 2'}}
+Sending ros message: {'op': 'publish', 'topic': '/from_windows', 'msg': {'data': 'Hello this is windows 3'}}
+Sending ros message: {'op': 'publish', 'topic': '/from_windows', 'msg': {'data': 'Hello this is windows 4'}}
+Sending ros message: {'op': 'publish', 'topic': '/from_windows', 'msg': {'data': 'Hello this is windows 5'}}
+Sending ros message: {'op': 'publish', 'topic': '/from_windows', 'msg': {'data': 'Hello this is windows 6'}}
+Sending ros message: {'op': 'publish', 'topic': '/from_windows', 'msg': {'data': 'Hello this is windows 7'}}
+Sending ros message: {'op': 'publish', 'topic': '/from_windows', 'msg': {'data': 'Hello this is windows 8'}}
+Sending ros message: {'op': 'publish', 'topic': '/from_windows', 'msg': {'data': 'Hello this is windows 9'}}
+```
+
+- ROS side terminal output.
+
+```shell
+$ rosrun oit_pbl_ros_samples communication_test.py 
+[INFO] [1626173639.498166, 38.800000]: /communication_with_win_sample_01:Started
+[INFO] [1626173639.814206, 39.100000]: /communication_with_win_sample_01:The server move_base comes up
+[INFO] [1626173639.815497, 39.100000]: /communication_with_win_sample_01:Sending goal
+[INFO] [1626173653.610203, 52.900000]: /communication_with_win_sample_01:Finished: (3)
+[INFO] [1626173669.637060, 68.900000]: /communication_with_win_sample_01:Receive from win(0):Hello this is windows 2
+[INFO] [1626173670.645778, 69.900000]: /communication_with_win_sample_01:Receive from win(1):Hello this is windows 3
+[INFO] [1626173671.645056, 70.900000]: /communication_with_win_sample_01:Receive from win(2):Hello this is windows 4
+[INFO] [1626173672.643695, 71.900000]: /communication_with_win_sample_01:Receive from win(3):Hello this is windows 5
+[INFO] [1626173673.644215, 72.900000]: /communication_with_win_sample_01:Receive from win(4):Hello this is windows 6
+[INFO] [1626173674.653763, 73.900000]: /communication_with_win_sample_01:Receive from win(5):Hello this is windows 7
+[INFO] [1626173675.654142, 74.900000]: /communication_with_win_sample_01:Receive from win(6):Hello this is windows 8
+[INFO] [1626173676.654058, 75.900000]: /communication_with_win_sample_01:Receive from win(7):Hello this is windows 9
+[INFO] [1626173680.670933, 79.900000]: /communication_with_win_sample_01:Exiting
+```
+
+### Overview of the programs
 
 - At first, robot will navivgate to point (1.15, 2.42).
 - Next, ROS node, `communication_with_win_sample_01.py`, sends messages to windows side program, `communication_with_ros_sample_01.py`. `communication_with_ros_sample_01.py` outputs the received messages like this `{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 0'}, 'op': 'publish'}`.

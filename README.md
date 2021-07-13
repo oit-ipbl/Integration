@@ -9,4 +9,4 @@
 - Index
   - [Windowsプログラムとメッセージを送受信する](win_single/win_single.md)
   - [複数のWindowsプログラムとメッセージを送受信する](win_multi/win_multi.md)
-  - [Mini contest](mini_contest/mini_contest.md)
+  - [Team exercise](team_exercise/team_exercise.md)

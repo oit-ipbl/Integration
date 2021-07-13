@@ -1,4 +1,4 @@
-# Message exchange between Windows program and ROS node
+# Message exchange between a Windows program and a ROS node
 
 [README](../README.md)
 
@@ -6,7 +6,7 @@
 
 ## Objectives
 
-Make a windonws program which can publish and receive ROS topic via TCP/IP.
+Make a windonws program and a ROS node which can communicate with each other via TCP/IP.
 
 ## Prerequisite
 
@@ -21,6 +21,8 @@ You have to finish all of [robots](https://github.com/oit-ipbl/robots) and [imag
   - [rosbridge_tcp.py](../rosbridge_tcp.py)
 - Make a python file named `communication_with_ros_sample_01.py` in Windows directory `C:\oit\py21\code` and edit it with VSCode.
   - See [image processing development](https://github.com/oit-ipbl/portal/blob/main/setup/python%2Bvscode.md).
+
+Type the following template. It's OK copy and paste.
 
 ```python
 #!/usr/bin/env python

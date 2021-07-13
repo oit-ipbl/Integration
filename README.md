@@ -7,6 +7,6 @@
   - Especially you want to work hard about image processing and robotics, please try to complete challenge tasks if possible.
 
 - Index
-  - [Windowsプログラムとメッセージを送受信する](win_single/win_single.md)
+  - [Message exchange between a Windows program and a ROS node](win_single/win_single.md)
   - [複数のWindowsプログラムとメッセージを送受信する](win_multi/win_multi.md)
   - [Team exercise](team_exercise/team_exercise.md)

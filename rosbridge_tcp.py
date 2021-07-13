@@ -110,7 +110,7 @@ class RosBridgeTCP(object):
                 return None
             if publish_msg is not None:
                 self.send_message(publish_msg)
-                print("Sending ros message: " + str(publish_msg))
+                # print("Sending ros message: " + str(publish_msg))
                 time.sleep(sleep_time)
             message = self.check_messages(self.wait(), target_words)
         return message

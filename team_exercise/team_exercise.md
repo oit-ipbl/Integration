@@ -6,23 +6,45 @@
 
 ## Objectives
 
-最終課題に備えて、チームでロボットと画像処理技術を統合したミニゲームを作成する。また、そのゲームの解説スライドを作成し、提出する。
+Integrate image processing and robotics techniques and develop one or more mini-games which includes both of the technologies.  
+The mini-games can be used as a subset of the final competition.
+
+Additionaly, all teams have to submit a slide to explain the mini-game.
 
 ## Prerequisite
 
-これまでの全ての技術
+You have to finish all of [robots](https://github.com/oit-ipbl/robots) and [image processing](https://github.com/oit-ipbl/image_processing).
+
+**Team members coorporation is the most essential factor.**
 
 ## Exercise (team development 1)
 
-Implement one or more mini games, which include windows side image processing technology and ROS side robotics technology.
+Implement one or more mini-games, which include windows side image processing technology and ROS side robotics technology.
 
-***You must complete this with team members!***
+**You must complete this with team members!**
 
 Break down the task into some pieces, and assign them to all members.
 
+### Mini-game ideas
+
+If you and your team members have no ideas, the following list may help you.
+
+- 壁の色を見て何かをする課題について，色を識別してその色をロボットに見せるようなIntegration題材にする
+- にらめっこ？とかポーズとか
+- ロボットが示す手を両手で出す
+- Follow Me.
+  - Move the object on the stage simulator, and control the robot to follow it.
+  - User can send start/stop signal of follow me with hand gesture that can be recognized by Windows side program using media-pipe.
+  - cf. [This movie](https://www.youtube.com/watch?v=8-CcklPzvyo) shows an example follow me robot. It's not a simulation but real robots.
+
+They are just ideas, and we can not ensure possibility of them.  
+Use the list as a hint for the exercise and let's discuss with your team members.
+
+**Make interesting games!**
+
 ## Exercise (team development 2)
 
-Make a presentation which explains your games.
+Make a presentation slide which explains your games.
 
 - Team name and member list.
 - Overview of your games.
@@ -30,12 +52,15 @@ Make a presentation which explains your games.
 - Algorithms.
 - Team members' roles.
   - Leader.
-  - Algorithm desigin.
+  - Algorithm desiginer.
   - Programmer (image, ROS etc.)
-  - Slide design.
+  - Slide designer.
   - Article writer.
   - Supporter.
   - ...
 
 ### Slide submission
 
+- The slide submission URL will open after Aug. 9.
+- The URL and submission method will be published at SLACK #general channel.
+- You have to submit the slide until Aug. 28.

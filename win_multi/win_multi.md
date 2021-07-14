@@ -33,7 +33,7 @@ from ros_utils import build_ros_array_msg
 
 
 
-def judge(robot_direction_type, your_face_direction):
+def judge(robot_hand_type, your_hand_type):
     return random.choice(["win", "lose", "even"]) # Dummy code
 
 

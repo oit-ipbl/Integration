@@ -19,6 +19,7 @@ You have to finish all of [robots](https://github.com/oit-ipbl/robots) and [imag
 - Download the following 2 files into Windows directory `C:\oit\py21\code`.
   - [ros_utils.py](../ros_utils.py)
   - [rosbridge_tcp.py](../rosbridge_tcp.py)
+- Install `bson` package into image processing development environment with `python -m pip install bson`.
 - Make a python file named `communication_with_ros_test.py` in Windows directory `C:\oit\py21\code` and edit it with VSCode.
   - See [image processing development](https://github.com/oit-ipbl/portal/blob/main/setup/python%2Bvscode.md).
 

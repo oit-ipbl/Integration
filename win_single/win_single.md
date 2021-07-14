@@ -19,7 +19,7 @@ You have to finish all of [robots](https://github.com/oit-ipbl/robots) and [imag
 - Download the following 2 files into Windows directory `C:\oit\py21\code`.
   - [ros_utils.py](../ros_utils.py)
   - [rosbridge_tcp.py](../rosbridge_tcp.py)
-- Make a python file named `communication_with_ros_sample_01.py` in Windows directory `C:\oit\py21\code` and edit it with VSCode.
+- Make a python file named `communication_with_ros_test.py` in Windows directory `C:\oit\py21\code` and edit it with VSCode.
   - See [image processing development](https://github.com/oit-ipbl/portal/blob/main/setup/python%2Bvscode.md).
 
 Type the following template. It's OK copy and paste.
@@ -162,19 +162,19 @@ $ roslaunch oit_stage_ros navigation.launch
 After a while run a sample program, `communication_test.py`.
 
 ```shell
-$ rosrun oit_pbl_ros_samples communication_test.py.py
+$ rosrun oit_pbl_ros_samples communication_test.py
 ```
 
 #### Run Windows side program within about 10 seconds
 
 ```cmd
-C:\oit\py21\code>python ./communication_with_ros_sample_01.py
+C:\oit\py21\code>python ./communication_with_ros_test.py
 ```
 
 - Windows side console output.
 
 ```cmd
- ./communication_with_ros_sample_01.py
+ ./communication_with_ros_test.py
 {'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 1'}, 'op': 'publish'}
 {'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 2'}, 'op': 'publish'}
 {'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 3'}, 'op': 'publish'}
@@ -225,9 +225,9 @@ $ rosrun oit_pbl_ros_samples communication_test.py
 
 ### Sequence of the programs
 
-- At first, ROS node, `communication_test.py`, sends messages to the Windows side program, `communication_with_ros_sample_01.py`. The messages are like this `Hello! this is ROS 0`
-- Windows side, `communication_with_ros_sample_01.py`, outputs the received messages like this `{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 0'}, 'op': 'publish'}`. This communication process is repeated 10 times.
-- After that the Windows side program, `communication_with_ros_sample_01.py`, sends messages and ROS node receieves them. The exchanged messages are like this, `Hello this is Windows 0`.
+- At first, ROS node, `communication_test.py`, sends messages to the Windows side program, `communication_with_ros_test.py`. The messages are like this `Hello! this is ROS 0`
+- Windows side, `communication_with_ros_test.py`, outputs the received messages like this `{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 0'}, 'op': 'publish'}`. This communication process is repeated 10 times.
+- After that the Windows side program, `communication_with_ros_test.py`, sends messages and ROS node receieves them. The exchanged messages are like this, `Hello this is Windows 0`.
 
 ### Important notice
 
@@ -254,7 +254,7 @@ You have to consider this fact to integrate Windows and ROS programs. The most s
 The wrapper classes have usefule methods.
 Add the following code to the programs.
 
-- Windows side, `communication_with_ros_sample_01.py`
+- Windows side, `communication_with_ros_test.py`
 
 ```python
 def main():
@@ -374,7 +374,7 @@ Run the programs with same procedure mentioned above. You can see the outputs li
 - Windows side
 
 ```cmd
-C:\oit\py21\code>python ./communication_with_ros_sample_01.py
+C:\oit\py21\code>python ./communication_with_ros_test.py
 {'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 1'}, 'op': 'publish'}
 {'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 2'}, 'op': 'publish'}
 ...
@@ -405,7 +405,7 @@ The samples use this method and implement a dummy Rock, Paper and Scissors game.
 
 ## Exercise (integration 1)
 
-The Windows program choice game result rondomly. See `communication_with_ros_sample_01.py`.
+The Windows program choice game result rondomly. See `communication_with_ros_test.py`.
 
 ```python
     # Judge

@@ -34,7 +34,7 @@ If you and your team members have no ideas, the following list may help you.
 - ロボットが示す手を両手で出す
 - Follow Me.
   - Move the object on the stage simulator, and control the robot to follow it.
-  - User can send start/stop signal of follow me with hand gesture that can be recognized by Windows side program using media-pipe.
+  - User can send start signal of follow me with hand gesture that can be recognized by Windows side program using media-pipe.
   - cf. [This movie](https://www.youtube.com/watch?v=8-CcklPzvyo) shows an example follow me robot. It's not a simulation but real robots.
 
 They are just ideas, and we can not ensure possibility of them.  

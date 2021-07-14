@@ -305,7 +305,7 @@ def main():
         "msg": {"data": hand_type}
     }
     # 1st argument: Message for publishing.
-    # 2nd argument: Target keywords to receive. Your program will wait until one of the word in the array, 'hand_types'.
+    # 2nd argument: Target keywords to receive. Your program will wait until receiving one of the word in the array, 'hand_types'.
     message_from_ros = ros_bridge_tcp.wait_response(pub_msg, hand_types, timeout=30)
     if message_from_ros:
         print("Receive from ROS:" + message_from_ros)
@@ -360,7 +360,7 @@ def main():
         rospy.loginfo("%s:Robot selects '%s'", node_name, hand_type)
         # Send robot's choice to windows game Rock, Paper, Scissors, and wait game result
         # 1st argument: Message for publishing.
-        # 2nd argument: Target keywords to receive. Your program will wait until one of the word in the array, ["win", "lose", "even"].
+        # 2nd argument: Target keywords to receive. Your program will wait until receiving one of the word in the array, ["win", "lose", "even"].
         message_from_win = messenger.wait_response(
             hand_type, ["win", "lose", "even"], timeout=30)
         if message_from_win:
@@ -400,7 +400,7 @@ $ rosrun oit_pbl_ros_samples communication_test.py
 ```
 
 The wrapper class, `RosBridgeTCP` and `RosWinMessenger`, have `wait_response` method.
-The method can specify target keywords to receive as the 2nd argument, and block the program until receiving the keywords.
+The method can specify target keywords to receive as the 2nd argument, and block the program until receiving one of the keywords.
 The samples use this method and implement a dummy Rock, Paper and Scissors game.
 
 ## Exercise (integration 1)

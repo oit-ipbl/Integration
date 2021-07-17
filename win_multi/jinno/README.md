@@ -215,7 +215,7 @@ if __name__ == '__main__':
 
 ## 各ゲームプログラム
 ### ロックペーパーシザーズ
-
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import random
@@ -266,7 +266,6 @@ def start_game(topic_name_from_win, ros_bridge_tcp):
     # Send game result to ROS.
     print(result)
     ros_bridge_tcp.wait_response(pub_msg, ["OK"], timeout=10)
-
 
 
 # class GameRPS():

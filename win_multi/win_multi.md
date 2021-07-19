@@ -17,72 +17,58 @@ You have to finish all of [robots](https://github.com/oit-ipbl/robots) and [imag
 
 ## Practice
 
-### Make a Windows side python program A
-
-- Make a python file named `play_with_ros_test_a.py` in Windows directory `C:\oit\py21\code` and edit it with VSCode.
-  - See [image processing development](https://github.com/oit-ipbl/portal/blob/main/setup/python%2Bvscode.md).
-
-Type the following template. It's OK copy and paste.
-
+### Make a Windows side python program Main
 ```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import random
 from rosbridge_tcp import RosBridgeTCP
 from ros_utils import build_ros_array_msg
-
-
-
-def judge(robot_hand_type, your_hand_type):
-    return random.choice(["win", "lose", "even"]) # Dummy code
+import rps_game as rps
+import gcp_game as gcp
+# import timepytho
 
 
 def main():
     ros_bridge_tcp = RosBridgeTCP()
-    # Publisher from Windows
-    topic_name_from_win = "/from_windows_a" # Topic name for this program
+    topic_name_from_win = "/from_windows"
     advertise_msg = {
         "op": "advertise",
         "topic": topic_name_from_win,
         "type": "std_msgs/String"
     }
     ros_bridge_tcp.send_message(advertise_msg)
-    # Subscribe to ros topic
-    topic_name_from_ros = "/from_ros_a"  # Topic name for this program
+    # subscribe to ros topic
+    topic_name_from_ros = "/from_ros"
     subscribe_msg = {
         "op": "subscribe",
         "topic": topic_name_from_ros,
         "type": "std_msgs/String"
     }
     ros_bridge_tcp.send_message(subscribe_msg)
-    print("Waiting ROS message...")
-    message_from_ros = ros_bridge_tcp.wait_response()
-    if message_from_ros:
-        print("Receive from ROS:" + message_from_ros)
-    # Dummy Rock, Paper and Scissors game
-    hand_types = ["rock", "paper", "scissors"]
-    hand_type = random.choice(hand_types)
 
-    # Send your hand type to ROS, and wait ROS robot's hand type.
-    pub_msg = {
-        "op": "publish",
-        "topic": topic_name_from_win,
-        "msg": {"data": hand_type}
-    }
-    message_from_ros = ros_bridge_tcp.wait_response(
-        pub_msg, hand_types, 30)
-    if message_from_ros:
-        print("Receive from ROS:" + message_from_ros)
-
-    # Judge
-    result = judge(message_from_ros, hand_type)
-    pub_msg = {
-        "op": "publish",
-        "topic": topic_name_from_win,
-        "msg": {"data": result}
-    }
-    # Send game result to ROS.
-    ros_bridge_tcp.wait_response(pub_msg, timeout=10)
+    # tm = time.time()
+    while True:
+        messages = ros_bridge_tcp.wait()
+        for message in messages:
+            # print(message)
+            # if message['topic'] == "/from_ros_rps":
+            if message['msg']['data'] == "rps game start":
+                rps.start_game(topic_name_from_win, ros_bridge_tcp)
+            if message['msg']['data'] == "gcp game start":
+                gcp.start_game(topic_name_from_win, ros_bridge_tcp)
+            if message['msg']['data'] == "end game":
+                pub_msg = {
+                    "op": "publish",
+                    "topic": topic_name_from_win,
+                    "msg": {"data": "game is finished!"}
+                }
+                # Send game result to ROS.
+                print("Game is finished!")
+                ros_bridge_tcp.wait_response(pub_msg, ["OK"], timeout=10)
+                break
+        else:
+            continue
+        break
 
     try:
         ros_bridge_tcp.terminate()
@@ -95,7 +81,67 @@ if __name__ == '__main__':
     main()
 ```
 
-### Make a Windows side python program B
+### Make a Windows side python program GCP
+
+- Make a python file named `play_with_ros_test_a.py` in Windows directory `C:\oit\py21\code` and edit it with VSCode.
+  - See [image processing development](https://github.com/oit-ipbl/portal/blob/main/setup/python%2Bvscode.md).
+
+Type the following template. It's OK copy and paste.
+
+```python
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import random
+# from rosbridge_tcp import RosBridgeTCP
+# from ros_utils import build_ros_array_msg
+
+
+def decide_win_hand(hand_types):
+    ## hand gesticulation with image processing ###
+    hand_type = random.choice(hand_types)
+    ###############################################
+    print("Windows side selected hand type '" + hand_type + "'")
+    return hand_type
+
+def judge_gcp_game(win_hand, ros_hand):
+    print("Win:", win_hand, "\tROS:", ros_hand)
+    ## judge rps game by using 2 hand_type ########
+    return random.choice(["win", "lose", "even"])
+    ###############################################
+
+def start_game(topic_name_from_win, ros_bridge_tcp):
+    message_from_ros = ros_bridge_tcp.wait_response()
+    if message_from_ros:
+        print("Receive from ROS:" + message_from_ros)
+
+    # Decide your hand
+    hand_types = ["gu", "pa", "choki"]
+    hand_type = decide_win_hand(hand_types)
+
+    # Send your hand type to ROS, and wait ROS robot's hand type.
+    pub_msg = {
+        "op": "publish",
+        "topic": topic_name_from_win,
+        "msg": {"data": hand_type}
+    }
+    message_from_ros = ros_bridge_tcp.wait_response(
+        pub_msg, hand_types, timeout=30)
+    if message_from_ros:
+        print("Receive from ROS:" + message_from_ros)
+
+    # Judge
+    result = judge_gcp_game(hand_type, message_from_ros)
+    pub_msg = {
+        "op": "publish",
+        "topic": topic_name_from_win,
+        "msg": {"data": result}
+    }
+    # Send game result to ROS.
+    print(result)
+    ros_bridge_tcp.wait_response(pub_msg, ["OK"], timeout=10)
+```
+
+### Make a Windows side python program RSP
 
 - Make a python file named `play_with_ros_test_b.py` in Windows directory `C:\oit\py21\code` and edit it with VSCode.
   - See [image processing development](https://github.com/oit-ipbl/portal/blob/main/setup/python%2Bvscode.md).
@@ -106,71 +152,53 @@ Type the following template. It's OK copy and paste.
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import random
-import time
-from rosbridge_tcp import RosBridgeTCP
-from ros_utils import build_ros_array_msg
+# from rosbridge_tcp import RosBridgeTCP
+# from ros_utils import build_ros_array_msg
 
 
-def judge(robot_answer, your_finger_number):
-    return random.choice(["right", "wrong"]) # Dummy code
+def decide_win_hand(hand_types):
+    ## hand gesticulation with image processing ###
+    hand_type = random.choice(hand_types)
+    ###############################################
+    print("Windows side selected hand type '" + hand_type + "'")
+    return hand_type
 
+def judge_rps_game(win_hand, ros_hand):
+    print("Win:", win_hand, "\tROS:", ros_hand)
+    ## judge rps game by using 2 hand_type ########
+    return random.choice(["win", "lose", "even"])
+    ###############################################
 
-def main():
-    ros_bridge_tcp = RosBridgeTCP()
-    # publisher from Windows
-    topic_name_from_win = "/from_windows_b" # Topic name for this program
-    advertise_msg = {
-        "op": "advertise",
-        "topic": topic_name_from_win,
-        "type": "std_msgs/String"
-    }
-    ros_bridge_tcp.send_message(advertise_msg)
-    # subscribe to ros topic
-    topic_name_from_ros = "/from_ros_b" # Topic name for this program
-    subscribe_msg = {
-        "op": "subscribe",
-        "topic": topic_name_from_ros,
-        "type": "std_msgs/String"
-    }
-    ros_bridge_tcp.send_message(subscribe_msg)
-    print("Waiting ROS message...")
+def start_game(topic_name_from_win, ros_bridge_tcp):
     message_from_ros = ros_bridge_tcp.wait_response()
     if message_from_ros:
         print("Receive from ROS:" + message_from_ros)
-    # Dummy Finger number count game
-    finger_numbers = ["1", "2", "3", "4", "5"]
-    finger_number = random.choice(finger_numbers)
 
-    # Send your finger number to ROS, and wait ROS robot's answer.
+    # Decide your hand
+    hand_types = ["rock","paper","scissors"]
+    hand_type = decide_win_hand(hand_types)
+
+    # Send your hand type to ROS, and wait ROS robot's hand type.
     pub_msg = {
         "op": "publish",
         "topic": topic_name_from_win,
-        "msg": {"data": finger_number}
+        "msg": {"data": hand_type}
     }
     message_from_ros = ros_bridge_tcp.wait_response(
-        pub_msg, finger_numbers, 30)
+        pub_msg, hand_types, timeout=30)
     if message_from_ros:
         print("Receive from ROS:" + message_from_ros)
 
     # Judge
-    result = judge(message_from_ros, finger_number)
+    result = judge_rps_game(hand_type, message_from_ros)
     pub_msg = {
         "op": "publish",
         "topic": topic_name_from_win,
         "msg": {"data": result}
     }
     # Send game result to ROS.
+    print(result)
     ros_bridge_tcp.wait_response(pub_msg, ["OK"], timeout=10)
-
-    try:
-        ros_bridge_tcp.terminate()
-        ros_bridge_tcp = None
-    except Exception as e:
-        print(str(e))
-
-
-if __name__ == '__main__':
-    main()
 ```
 
 ### Make a ROS node
@@ -190,32 +218,38 @@ from std_msgs.msg import String
 from utils import RosWinMessenger
 
 
-class CommunicationMultiTestNode(object):
+class gameWithWinNode(object):
     def __init__(self):
         pass
 
-    def play_game_A(self):
+    def play_rps_game(self):
         rospy.sleep(3)
         node_name = rospy.get_name()
         # Prepare to play Windows game A
         # Specify topic names to commnicate with play_with_ros_test_a.py
-        to_win_pub = rospy.Publisher("/from_ros_a", String, queue_size=1)
-        messenger = RosWinMessenger(to_win_pub, "/from_windows_a")
+        topic_from_ros = "/from_ros_rps"
+        topic_from_win = "/from_windows_rps"
+        to_win_pub = rospy.Publisher(topic_from_ros, String, queue_size=1)
+        messenger = RosWinMessenger(to_win_pub, topic_from_win)
         # Start game sequence A
-        rospy.loginfo("%s:Try to start game A", node_name)
+        rospy.loginfo("%s:Try to start rps game", node_name)
+
         # Send game start signal to Windows, and wait Windows side response.
         message_from_win = messenger.wait_response(
-            "Start your game!", None, timeout=30)
+            "rps game start", None, timeout=30)
         if message_from_win:
             rospy.loginfo("%s:Receive from win:%s",
                           node_name, message_from_win)
         else:
-            rospy.logerr("%s:Timeout. can't start Windows game A", node_name)
+            rospy.logerr("%s:Timeout. can't start Windows rps game", node_name)
             return "even"
-        # Select hand type
-        hand_type = random.choice(["rock", "paper", "scissors"])
+
+        # Select robot's hand_type
+        hand_types = ["rock", "paper", "scissors"]
+        hand_type = random.choice(hand_types)
         rospy.loginfo("%s:Robot selects '%s'", node_name, hand_type)
-        # Send robot's choice to Windows game A, and wait game result
+
+        # Send robot's choice to windows game Rock, Paper, Scissors, and wait game result
         message_from_win = messenger.wait_response(
             hand_type, ["win", "lose", "even"], timeout=30)
         if message_from_win:
@@ -223,50 +257,82 @@ class CommunicationMultiTestNode(object):
                           node_name, message_from_win)
         else:
             rospy.logerr(
-                "%s:Timeout. can't get Windows game B result", node_name)
+                "%s:Timeout. can't get Windows rps game result", node_name)
             return "even"
         rospy.sleep(3)
-        return message_from_win
+        return message_from_win                          
 
-    def play_game_B(self):
+    def play_gcp_game(self):
         rospy.sleep(3)
         node_name = rospy.get_name()
-        # Prepare to play Windows game B
-        # Specify topic names to commnicate with play_with_ros_test_b.py
-        to_win_pub = rospy.Publisher("/from_ros_b", String, queue_size=1)
-        messenger = RosWinMessenger(to_win_pub, "/from_windows_b")
-        # Start game sequence B
-        rospy.loginfo("%s:Try to start game B", node_name)
+        # Prepare to play Windows game A
+        # Specify topic names to commnicate with play_with_ros_test_a.py
+        topic_from_ros = "/from_ros_gcp"
+        topic_from_win = "/from_windows_gcp"
+        to_win_pub = rospy.Publisher(topic_from_ros, String, queue_size=1)
+        messenger = RosWinMessenger(to_win_pub, topic_from_win)
+        # Start game sequence A
+        rospy.loginfo("%s:Try to start gcp game", node_name)
+
         # Send game start signal to Windows, and wait Windows side response.
         message_from_win = messenger.wait_response(
-            "Start your game!", None, timeout=30)
+            "gcp game start", None, timeout=30)
         if message_from_win:
             rospy.loginfo("%s:Receive from win:%s",
                           node_name, message_from_win)
         else:
-            rospy.logerr("%s:Timeout. can't start Windows game B", node_name)
-            return "wrong"
-        # Select digits
-        rand_digit = random.choice(["1", "2", "3", "4", "5"])
-        rospy.loginfo("%s:Robot selects '%s'", node_name, rand_digit)
-        # Send robot's choice to Windows game B, and wait game result
+            rospy.logerr("%s:Timeout. can't start Windows gcp game", node_name)
+            return "even"
+
+        # Select robot's hand_type
+        hand_types = ["gu", "pa", "choki"]
+        hand_type = random.choice(hand_types)
+        rospy.loginfo("%s:Robot selects '%s'", node_name, hand_type)
+
+        # Send robot's choice to windows game Rock, Paper, Scissors, and wait game result
         message_from_win = messenger.wait_response(
-            rand_digit, ["right", "wrong"], timeout=30)
+            hand_type, ["win", "lose", "even"], timeout=30)
         if message_from_win:
             rospy.loginfo("%s:Receive from win:%s",
                           node_name, message_from_win)
         else:
             rospy.logerr(
-                "%s:Timeout. can't get Windows game B result", node_name)
-            return "wrong"
+                "%s:Timeout. can't get Windows gcp game result", node_name)
+            return "even"
         rospy.sleep(3)
+
+        self.end_game(topic_from_ros, topic_from_win)
+
         return message_from_win
+
+    def end_game(self, topic_from_ros, topic_from_win):
+        rospy.sleep(3)
+        node_name = rospy.get_name()
+        # Prepare to play Windows game A
+        # Specify topic names to commnicate with play_with_ros_test_a.py
+        to_win_pub = rospy.Publisher("/from_ros", String, queue_size=1)
+        messenger = RosWinMessenger(to_win_pub, "/from_windows")
+        # Start game sequence A
+        rospy.loginfo("%s:Try to end game", node_name)
+
+        # Send game start signal to Windows, and wait Windows side response.
+        message_from_win = messenger.wait_response(
+            "end game", None, timeout=30)
+        if message_from_win:
+            rospy.loginfo("%s:Receive from win:%s",
+                          node_name, message_from_win)
+        else:
+            rospy.logerr("%s:Timeout. can't end Windows game process.", node_name)
+
 
     def process(self):
         rospy.sleep(10)
         node_name = rospy.get_name()
-        result_A = self.play_game_A()  # Play game A
-        result_B = self.play_game_B()  # Play game B
+        print("---rps---")
+        result_A = self.play_rps_game()  # Play game A
+        rospy.sleep(10)
+        print("---gcp---")
+        result_B = self.play_gcp_game()  # Play game B
         # Show game results
         rospy.loginfo("/* GAME RESULTS */")
         rospy.loginfo("/* GAME (A):%s */", result_A)
@@ -279,7 +345,7 @@ def main():
     rospy.init_node(os.path.splitext(script_name)[0])
     rospy.sleep(0.5)  # rospy.Time.now() returns 0, without this sleep.
 
-    node = CommunicationMultiTestNode()
+    node = gameWithWinNode()
     rospy.loginfo("%s:Started", rospy.get_name())
 
     node.process()

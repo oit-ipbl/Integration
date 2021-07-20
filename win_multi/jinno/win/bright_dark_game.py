@@ -39,8 +39,8 @@ def bright_dark(win_msg):
             print("Ignoring empty camera frame")
             continue
 
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        brightness = frame.mean()
+        gframe = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        brightness = gframe.mean()
 
         cv2.putText(frame, win_msg, (50, 50), cv2.FONT_HERSHEY_COMPLEX, 1.0, (0,255,0), 2)
         if cnt > 60:

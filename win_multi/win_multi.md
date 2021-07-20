@@ -227,8 +227,10 @@ class gameWithWinNode(object):
         node_name = rospy.get_name()
         # Prepare to play Windows game A
         # Specify topic names to commnicate with play_with_ros_test_a.py
-        to_win_pub = rospy.Publisher("/from_ros", String, queue_size=1)
-        messenger = RosWinMessenger(to_win_pub, "/from_windows")
+        topic_from_ros = "/from_ros_rps"
+        topic_from_win = "/from_windows_rps"
+        to_win_pub = rospy.Publisher(topic_from_ros, String, queue_size=1)
+        messenger = RosWinMessenger(to_win_pub, topic_from_win)
         # Start game sequence A
         rospy.loginfo("%s:Try to start rps game", node_name)
 
@@ -265,8 +267,10 @@ class gameWithWinNode(object):
         node_name = rospy.get_name()
         # Prepare to play Windows game A
         # Specify topic names to commnicate with play_with_ros_test_a.py
-        to_win_pub = rospy.Publisher("/from_ros", String, queue_size=1)
-        messenger = RosWinMessenger(to_win_pub, "/from_windows")
+        topic_from_ros = "/from_ros_gcp"
+        topic_from_win = "/from_windows_gcp"
+        to_win_pub = rospy.Publisher(topic_from_ros, String, queue_size=1)
+        messenger = RosWinMessenger(to_win_pub, topic_from_win)
         # Start game sequence A
         rospy.loginfo("%s:Try to start gcp game", node_name)
 
@@ -296,9 +300,12 @@ class gameWithWinNode(object):
                 "%s:Timeout. can't get Windows gcp game result", node_name)
             return "even"
         rospy.sleep(3)
+
+        self.end_game(topic_from_ros, topic_from_win)
+
         return message_from_win
 
-    def end_game(self):
+    def end_game(self, topic_from_ros, topic_from_win):
         rospy.sleep(3)
         node_name = rospy.get_name()
         # Prepare to play Windows game A
@@ -326,9 +333,6 @@ class gameWithWinNode(object):
         rospy.sleep(10)
         print("---gcp---")
         result_B = self.play_gcp_game()  # Play game B
-        rospy.sleep(10)
-        print("---end---")
-        self.end_game()
         # Show game results
         rospy.loginfo("/* GAME RESULTS */")
         rospy.loginfo("/* GAME (A):%s */", result_A)

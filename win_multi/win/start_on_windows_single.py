@@ -26,22 +26,21 @@ def main():
 
     print("Wait ROS messages...")
 
-    # tm = time.time()
     while True:
-        messages = ros_bridge_tcp.wait() #Wait for message from ROS and assign the response into messages
+        messages = ros_bridge_tcp.wait() #Wait for message from ROS and assign the response into 'messages'
         for message in messages:
-            # If message['msg']['data'] is "start show hand game", then shg.star_game is invoked
+            # If message['msg']['data'] is "[shg]start show hand game", then shg.star_game is invoked
             if message['msg']['data'] == "[shg]start show hand game":
                 shgw.start_game(topic_name_from_win, ros_bridge_tcp)
             if message['msg']['data'] == "The end":
                 pub_msg = {
                     "op": "publish",
                     "topic": topic_name_from_win,
-                    "msg": {"data": "game is finished!"}
+                    "msg": {"data": "Every game has finished!"}
                 }
-                # Send game result to ROS.
-                print("Game is finished!")
-                ros_bridge_tcp.wait_response(pub_msg, ["OK"], timeout=5)
+                print("Every game has finished!")
+                # Send message "Every game has finished!" to ros.
+                ros_bridge_tcp.wait_response(pub_msg, ["Every game has finished"], timeout=5)
                 break
         else:
             continue

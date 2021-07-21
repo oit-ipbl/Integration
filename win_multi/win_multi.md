@@ -14,33 +14,36 @@ Let's Make multiple image processing programs on windows and a ROS node which ca
 
 You have to finish all of [robots](https://github.com/oit-ipbl/robots), [image processing](https://github.com/oit-ipbl/image_processing), and [Message exchange between a Windows program and a ROS node](win_single/win_single.md)
 
-
 ## Practice1(Single image processing program and a ros node)
-
-### Make a Windows side python program Main
+### Make a Windows side python program
 - Windowsで最初に起動するプログラム．このプログラムからROSと通信しながら画像処理をするプログラムを呼び出す．
   - このプログラムは一つだけ画像処理プログラムを呼び出します
-- 以下にコードを置いてあるので参照し，`start_on_windows_single.py`という名前で`code`フォルダ(on windows)に保存しましょう．
-  - [game_with_ros_single.py](./win/game_with_ros_single.py)
-  - ファイルをダウンロードしたい場合は，上のリンクをクリックしてから，`Raw`をクリックしてダウンロードしましょう
-- 以降，このコードの重要箇所の振る舞いを説明します
-- 新しくROSとコミュニケーションする画像処理プログラムを追加する場合は下記部分を編集しなければならない
+- 以下の2つのファイルを`code`フォルダ(on windows)に保存しましょう． 
+  - ファイルをダウンロードしたい場合はリンクをクリックしてから，`Raw`をクリックしてダウンロードしましょう.
+  - [start_on_windows_single.py](./win/start_on_windows_single.py)
+    - ROSからのメッセージを最初に待つ．すべての画像処理プログラムはこのモジュールから呼び出される
+  - [show_hand_game_win.py](./win/show_hand_game_win.py)
+    - ROSとコミュニケーションする画像処理プログラム
+- 新しくROSとコミュニケーションする画像処理プログラムを追加する場合は`start_on_windows_single.py`の下記部分を編集しなければならない
+  - `if message['msg']['data'] == "[shg]start show hand game":` はROSから`[shg]start show hand game`というメッセージが届いたときに処理される
+  - `shg.start_game(topic_name_from_win, ros_bridge_tcp)` はROSとコミュニケーションする画像処理プログラム（すなわち`show_hand_game_win.py`のstart_game functionを呼ぶ．
+    - `import show_hand_game_win as shg` should be added.
 ```python
     while True:
-        messages = ros_bridge_tcp.wait() # ROSからのメッセージを
+        messages = ros_bridge_tcp.wait() #Wait for message from ROS and assign the response into 'messages'
         for message in messages:
-            # print(message)
-            if message['msg']['data'] == "start show hand game":
+            # If message['msg']['data'] is "[shg]start show hand game", then shg.star_game is invoked
+            if message['msg']['data'] == "[shg]start show hand game":
                 shg.start_game(topic_name_from_win, ros_bridge_tcp)
-            if message['msg']['data'] == "end game":
+            if message['msg']['data'] == "The end":
                 pub_msg = {
                     "op": "publish",
                     "topic": topic_name_from_win,
-                    "msg": {"data": "game is finished!"}
+                    "msg": {"data": "Every game has finished!"}
                 }
-                # Send game result to ROS.
-                print("Game is finished!")
-                ros_bridge_tcp.wait_response(pub_msg, ["OK"], timeout=5)
+                print("Every game has finished!")
+                # Send message "Every game has finished!" to ros.
+                ros_bridge_tcp.wait_response(pub_msg, ["Every game has finished"], timeout=5)
                 break
         else:
             continue

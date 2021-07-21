@@ -127,7 +127,7 @@ def start_game(topic_name_from_win, ros_bridge_tcp):
 def demo_DIP_game():
 
     # Decide your hand
-    hand_types = ["left", "right"]
+    hand_types = ["[shg]left", "[shg]right"]
     message_from_ros = random.choice(hand_types)
     print("\nReceive from ROS:", message_from_ros, "\n")
 

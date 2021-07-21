@@ -6,57 +6,32 @@
 
 ## Objectives
 
-Make Windonws programs and a ROS node which can communicate with each other via TCP/IP.
+Let's Make multiple image processing programs on windows and a ROS node which can communicate with each other via TCP/IP.
 
-ROS node controls multi Windows programs, therefore the node should define multi topic names.  
-Each topic name corresponds to each Windows program, and the ROS node can select Windows program to exchange messages by specifing a topic name.
+ここでは複数の画像処理プログラムとROSノードを連携させる方法を学修する
 
 ## Prerequisite
 
 You have to finish all of [robots](https://github.com/oit-ipbl/robots), [image processing](https://github.com/oit-ipbl/image_processing), and [Message exchange between a Windows program and a ROS node](win_single/win_single.md)
 
 
-## Practice
+## Practice1(Single image processing program and a ros node)
 
 ### Make a Windows side python program Main
+- Windowsで最初に起動するプログラム．このプログラムからROSと通信しながら画像処理をするプログラムを呼び出す．
+  - このプログラムは一つだけ画像処理プログラムを呼び出します
+- 以下にコードを置いてあるので参照し，`start_on_windows_single.py`という名前で`code`フォルダ(on windows)に保存しましょう．
+  - [game_with_ros_single.py](./win/game_with_ros_single.py)
+  - ファイルをダウンロードしたい場合は，上のリンクをクリックしてから，`Raw`をクリックしてダウンロードしましょう
+- 以降，このコードの重要箇所の振る舞いを説明します
+- 新しくROSとコミュニケーションする画像処理プログラムを追加する場合は下記部分を編集しなければならない
 ```python
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-from rosbridge_tcp import RosBridgeTCP
-from ros_utils import build_ros_array_msg
-import rps_game as rps
-import gcp_game as gcp
-# import timepytho
-
-
-def main():
-    ros_bridge_tcp = RosBridgeTCP()
-    topic_name_from_win = "/from_windows"
-    advertise_msg = {
-        "op": "advertise",
-        "topic": topic_name_from_win,
-        "type": "std_msgs/String"
-    }
-    ros_bridge_tcp.send_message(advertise_msg)
-    # subscribe to ros topic
-    topic_name_from_ros = "/from_ros"
-    subscribe_msg = {
-        "op": "subscribe",
-        "topic": topic_name_from_ros,
-        "type": "std_msgs/String"
-    }
-    ros_bridge_tcp.send_message(subscribe_msg)
-
-    # tm = time.time()
     while True:
-        messages = ros_bridge_tcp.wait()
+        messages = ros_bridge_tcp.wait() # ROSからのメッセージを
         for message in messages:
             # print(message)
-            # if message['topic'] == "/from_ros_rps":
-            if message['msg']['data'] == "rps game start":
-                rps.start_game(topic_name_from_win, ros_bridge_tcp)
-            if message['msg']['data'] == "gcp game start":
-                gcp.start_game(topic_name_from_win, ros_bridge_tcp)
+            if message['msg']['data'] == "start show hand game":
+                shg.start_game(topic_name_from_win, ros_bridge_tcp)
             if message['msg']['data'] == "end game":
                 pub_msg = {
                     "op": "publish",
@@ -65,21 +40,11 @@ def main():
                 }
                 # Send game result to ROS.
                 print("Game is finished!")
-                ros_bridge_tcp.wait_response(pub_msg, ["OK"], timeout=10)
+                ros_bridge_tcp.wait_response(pub_msg, ["OK"], timeout=5)
                 break
         else:
             continue
         break
-
-    try:
-        ros_bridge_tcp.terminate()
-        ros_bridge_tcp = None
-    except Exception as e:
-        print(str(e))
-
-
-if __name__ == '__main__':
-    main()
 ```
 
 ### Make a Windows side python program GCP

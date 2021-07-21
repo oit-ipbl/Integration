@@ -61,12 +61,14 @@ def start_game(topic_name_from_win, ros_bridge_tcp):
     print(result)
     # In this program, ros never return to the following wait_response
     ros_bridge_tcp.wait_response(pub_msg, ["[shg]OK_result"], timeout=5)
-    ```
+```
+
 #### start_on_windows_single.py
 - 新しくROSとコミュニケーションする画像処理プログラムを追加する場合は`start_on_windows_single.py`の下記部分を編集しなければならない
   - `if message['msg']['data'] == "[shg]start show hand game":` はROSから`[shg]start show hand game`というメッセージが届いたときに実行される条件式である
   - `shg.start_game(topic_name_from_win, ros_bridge_tcp)` はROSとコミュニケーションする画像処理プログラム（すなわち`show_hand_game_win.py`のstart_game functionを呼ぶ．
     - `import show_hand_game_win as shg` is also required.
+
 ```python
     while True:
         messages = ros_bridge_tcp.wait() #Wait for message from ROS and assign the response into 'messages'

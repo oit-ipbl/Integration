@@ -16,18 +16,57 @@ You have to finish all of [robots](https://github.com/oit-ipbl/robots), [image p
 
 ## Practice1(Single image processing program and a ros node)
 ### Make a Windows side python program
-- Windowsで最初に起動するプログラム．このプログラムからROSと通信しながら画像処理をするプログラムを呼び出す．
-  - このプログラムは一つだけ画像処理プログラムを呼び出します
 - 以下の2つのファイルを`code`フォルダ(on windows)に保存しましょう． 
   - ファイルをダウンロードしたい場合はリンクをクリックしてから，`Raw`をクリックしてダウンロードしましょう.
   - [start_on_windows_single.py](./win/start_on_windows_single.py)
-    - ROSからのメッセージを最初に待つ．すべての画像処理プログラムはこのモジュールから呼び出される
+    - Windowsで最初に起動し，ROSからのメッセージを待つ．すべての画像処理プログラムはこのモジュールから呼び出される
   - [show_hand_game_win.py](./win/show_hand_game_win.py)
     - ROSとコミュニケーションする画像処理プログラム
+
+#### show_hand_game_win.py
+- このプログラムはmediapipesを利用して，コンピュータが指示した手をユーザがカメラに翳すゲームです
+- もしあなたがこのプログラムをテストしたければ，あなたはこのプログラムを下記コマンドで実行できる．
+  - `python show_hand_game_win.py`
+  - あなたが画像処理プログラムを作成する場合も，単独で実行できる関数(e.x. demo())を用意することを強くお勧めする．
+- このプログラムの start_game functionは `start_on_windows_single.py` から呼び出される．
+  - start_game functionでは，ROSとの間でメッセージの送受信が行われる．例えば，`message_from_ros = ros_bridge_tcp.wait_response(pub_msg, hand_types, timeout=30)` では，pub_msgをROSに送信し，hand_typesに含まれる文字列がROSから返ってくることを最大30秒待ち，返り値をmessage_from_rosに保存する
+  - ここで，ROSと交換するメッセージにはこのプログラムに属するメッセージであることを示すprefix(e.x. [shg])を付与することを我々は強く推奨する．
+```python
+def start_game(topic_name_from_win, ros_bridge_tcp):
+    # definition of message types receiving from ros
+    hand_types = ["[shg]left", "[shg]right"]
+
+    # Send start message and wait hand type selected by ROS
+    pub_msg = {
+        "op": "publish",
+        "topic": topic_name_from_win,
+        "msg": {"data": "[shg]OK_start"}
+    }
+    message_from_ros = ros_bridge_tcp.wait_response(pub_msg, hand_types, timeout=30)
+    if message_from_ros:
+        print("\nReceive from ROS:", message_from_ros, "\n")
+
+    # Decide your hand
+    window_message = "show only your " + message_from_ros + " hand!"
+    left, right = show_hand(window_message)
+
+    # Judge
+    result = judge_game(left, right, message_from_ros)
+    pub_msg = {
+        "op": "publish",
+        "topic": topic_name_from_win,
+        "msg": {"data": result}
+    }
+    # Send game result to ROS.
+    print(result)
+    # In this program, ros never return to the following wait_response
+    ros_bridge_tcp.wait_response(pub_msg, ["[shg]OK_result"], timeout=5)
+    ```
+#### start_on_windows_single.py
 - 新しくROSとコミュニケーションする画像処理プログラムを追加する場合は`start_on_windows_single.py`の下記部分を編集しなければならない
-  - `if message['msg']['data'] == "[shg]start show hand game":` はROSから`[shg]start show hand game`というメッセージが届いたときに処理される
+  - `if message['msg']['data'] == "[shg]start show hand game":` はROSから`[shg]start show hand game`というメッセージが届いたときに実行される条件式である
   - `shg.start_game(topic_name_from_win, ros_bridge_tcp)` はROSとコミュニケーションする画像処理プログラム（すなわち`show_hand_game_win.py`のstart_game functionを呼ぶ．
-    - `import show_hand_game_win as shg` should be added.
+    - `import show_hand_game_win as shg` is also required.
 ```python
     while True:
         messages = ros_bridge_tcp.wait() #Wait for message from ROS and assign the response into 'messages'
@@ -50,129 +89,38 @@ You have to finish all of [robots](https://github.com/oit-ipbl/robots), [image p
         break
 ```
 
-### Make a Windows side python program GCP
-
-- Make a python file named `play_with_ros_test_a.py` in Windows directory `C:\oit\py21\code` and edit it with VSCode.
-  - See [image processing development](https://github.com/oit-ipbl/portal/blob/main/setup/python%2Bvscode.md).
-
-Type the following template. It's OK copy and paste.
-
-```python
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-import random
-# from rosbridge_tcp import RosBridgeTCP
-# from ros_utils import build_ros_array_msg
-
-
-def decide_win_hand(hand_types):
-    ## hand gesticulation with image processing ###
-    hand_type = random.choice(hand_types)
-    ###############################################
-    print("Windows side selected hand type '" + hand_type + "'")
-    return hand_type
-
-def judge_gcp_game(win_hand, ros_hand):
-    print("Win:", win_hand, "\tROS:", ros_hand)
-    ## judge rps game by using 2 hand_type ########
-    return random.choice(["win", "lose", "even"])
-    ###############################################
-
-def start_game(topic_name_from_win, ros_bridge_tcp):
-    message_from_ros = ros_bridge_tcp.wait_response()
-    if message_from_ros:
-        print("Receive from ROS:" + message_from_ros)
-
-    # Decide your hand
-    hand_types = ["gu", "pa", "choki"]
-    hand_type = decide_win_hand(hand_types)
-
-    # Send your hand type to ROS, and wait ROS robot's hand type.
-    pub_msg = {
-        "op": "publish",
-        "topic": topic_name_from_win,
-        "msg": {"data": hand_type}
-    }
-    message_from_ros = ros_bridge_tcp.wait_response(
-        pub_msg, hand_types, timeout=30)
-    if message_from_ros:
-        print("Receive from ROS:" + message_from_ros)
-
-    # Judge
-    result = judge_gcp_game(hand_type, message_from_ros)
-    pub_msg = {
-        "op": "publish",
-        "topic": topic_name_from_win,
-        "msg": {"data": result}
-    }
-    # Send game result to ROS.
-    print(result)
-    ros_bridge_tcp.wait_response(pub_msg, ["OK"], timeout=10)
-```
-
-### Make a Windows side python program RSP
-
-- Make a python file named `play_with_ros_test_b.py` in Windows directory `C:\oit\py21\code` and edit it with VSCode.
-  - See [image processing development](https://github.com/oit-ipbl/portal/blob/main/setup/python%2Bvscode.md).
-
-Type the following template. It's OK copy and paste.
-
-```python
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-import random
-# from rosbridge_tcp import RosBridgeTCP
-# from ros_utils import build_ros_array_msg
-
-
-def decide_win_hand(hand_types):
-    ## hand gesticulation with image processing ###
-    hand_type = random.choice(hand_types)
-    ###############################################
-    print("Windows side selected hand type '" + hand_type + "'")
-    return hand_type
-
-def judge_rps_game(win_hand, ros_hand):
-    print("Win:", win_hand, "\tROS:", ros_hand)
-    ## judge rps game by using 2 hand_type ########
-    return random.choice(["win", "lose", "even"])
-    ###############################################
-
-def start_game(topic_name_from_win, ros_bridge_tcp):
-    message_from_ros = ros_bridge_tcp.wait_response()
-    if message_from_ros:
-        print("Receive from ROS:" + message_from_ros)
-
-    # Decide your hand
-    hand_types = ["rock","paper","scissors"]
-    hand_type = decide_win_hand(hand_types)
-
-    # Send your hand type to ROS, and wait ROS robot's hand type.
-    pub_msg = {
-        "op": "publish",
-        "topic": topic_name_from_win,
-        "msg": {"data": hand_type}
-    }
-    message_from_ros = ros_bridge_tcp.wait_response(
-        pub_msg, hand_types, timeout=30)
-    if message_from_ros:
-        print("Receive from ROS:" + message_from_ros)
-
-    # Judge
-    result = judge_rps_game(hand_type, message_from_ros)
-    pub_msg = {
-        "op": "publish",
-        "topic": topic_name_from_win,
-        "msg": {"data": result}
-    }
-    # Send game result to ROS.
-    print(result)
-    ros_bridge_tcp.wait_response(pub_msg, ["OK"], timeout=10)
-```
-
 ### Make a ROS node
+- Open `~/catkin_ws/` by Visual Studio Code editor, and add the following files into `~/catkin_ws/src/oit_pbl_ros_samples/scripts/`. See [Developing inside the ROS container with VSCode](https://github.com/oit-ipbl/portal/blob/main/setup/remote_with_vscode.md).
 
-Open `~/catkin_ws/src/oit_pbl_ros_samples/` by Visual Studio Code editor, and edit `communication_multi_test.py`. See [Developing inside the ROS container with VSCode](https://github.com/oit-ipbl/portal/blob/main/setup/remote_with_vscode.md).
+- 以下の2つのファイルを`~/catkin_ws/src/oit_pbl_ros_samples/scripts/`フォルダ(on ROS)に保存しましょう． 
+  - ファイルをダウンロードしたい場合はリンクをクリックしてから，`Raw`をクリックしてダウンロードしましょう.
+  - [start_on_ros_single.py](./ros/start_on_ros_single.py)
+    - Windowsで最初に起動し，ROSからのメッセージを待つ．すべての画像処理プログラムはこのモジュールから呼び出される
+  - [show_hand_game_ros.py](./ros/show_hand_game_ros.py)
+    - ROSとコミュニケーションする画像処理プログラム
+
+#### show_hand_game_ros.py
+- このファイルを実行するためには下記のStepが必要
+```sh
+chmod u+x start_on_ros_single.py
+chmod u+x show_hand_game_ros.py
+roslaunch oit_stage_ros navitation.launch
+```
+- 次に，別のターミナルを開いて `rosrun oit_pbl_ros_samples start_on_ros_single.py` を実行する
+  - なお，ここで`show_hand_game_ros.py` を単独でテストしたい場合は` rosrun oit_pbl_ros_samples show_hand_game_ros.py` と実行しても良い
+- このプログラムで`demo()` functionは
+
+```python
+def process():
+    rospy.sleep(10)
+    node_name = rospy.get_name()
+
+    print("---shg---")
+    result = shgr.play_show_hand_game()
+    rospy.sleep(5)
+    end_game()
+    rospy.loginfo("/* GAME:%s */", result)
+```
 
 Type the following template. It's OK copy and paste.
 

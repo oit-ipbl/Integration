@@ -45,7 +45,7 @@ def play_show_hand_game():
     rospy.sleep(3)
     return message_from_win                          
 
-def main():
+def demo():
     script_name = os.path.basename(__file__)
     rospy.init_node(os.path.splitext(script_name)[0])
     rospy.sleep(0.5)  # rospy.Time.now() returns 0, without this sleep.
@@ -63,7 +63,7 @@ def main():
 # If you want to test this program only, please execute "rosrun oit_pbl_ros_samples show_hand_game_ros.py" 
 if __name__ == '__main__':
     try:
-        main()
+        demo()
     except Exception as e:
         rospy.logerr("%s:%s", rospy.get_name(), str(e))
         exit(1)

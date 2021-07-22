@@ -110,7 +110,7 @@ python start_on_windows_single.py
 - 以下の2つのファイルを`~/catkin_ws/src/oit_pbl_ros_samples/scripts/`フォルダ(on ROS)に保存しましょう． 
   - ファイルをダウンロードしたい場合はリンクをクリックしてから，`Raw`をクリックしてダウンロードしましょう.
   - [start_on_ros_single.py](./ros/start_on_ros_single.py)
-    - Windowsで最初に起動し，ROSからのメッセージを待つ．すべての画像処理プログラムはこのモジュールから呼び出される
+    - ROSコンテナ内で起動され，Windows側pythonプログラムに対してメッセージを投げる．以下の`show_hand_game_ros.py`を呼び出す．ROS側プログラム．
   - [show_hand_game_ros.py](./ros/show_hand_game_ros.py)
     - `show_hand_game_win.py`とコミュニケーションするROS側プログラム
 
@@ -203,11 +203,76 @@ def process():
 ```
 
 ## Exercise (add another service)
+### Windows side
 - 先ほどのpracticeではshow_hand_gameとROSのコミュニケーションを実装しました．このExerciseでは，show_hand_gameに以下のbright_darkゲームを追加してください．
 - まず，`bright_dark_game_win.py`をダウンロードし，`code`フォルダ(on windows)に保存しましょう． 
   - ファイルをダウンロードしたい場合はリンクをクリックしてから，`Raw`をクリックしてダウンロードしましょう.
   - [bright_dark_game_win.py](./win/start_on_windows_single.py)
     - ROSとコミュニケーションする画像処理プログラム
+
+- 保存したら`bright_dark_game_win.py`を実行し，正常に動作するか確認しましょう．
+  - たまに正常に動作しない場合があります．その場合はWindows Terminalを再起動してみよう．
+```sh
+python bright_dark_game_win.py
+```
+- 上記コマンドが正常に実行できることを確認した後，`start_on_windows_single.py`をコピーし，`start_on_windows_multi.py`に名前を変えて`code`フォルダ(on Windows)に保存しましょう．
+- 次に，`start_on_windows_multi.py`の`shg.start_game(topic_name_from_win, ros_bridge_tcp)`の次の行に下記のif文を追加し，`import bright_dark_game_win as bdg`のimport文をプログラムの冒頭に追加しましょう．
+  - 以下のコードはbright_dark_game_win.pyの`start_game` functionを呼び出す処理です．
+
+```python
+            if message['msg']['data'] == "[bdg]start bright dark game":
+                bdg.start_game(topic_name_from_win, ros_bridge_tcp)
+```
+
+### ROS side
+
+- 次に`bright_dark_game_ros.py`をダウンロードし，`~/catkin_ws/src/oit_pbl_ros_samples/scripts/`フォルダ(on ROS)に保存しましょう． 
+  - [bright_dark_game_ros.py](./ros/bright_dark_game_ros.py)
+    - `bright_dark_game_win.py`とコミュニケーションするROS側プログラム
+    - Open `~/catkin_ws/` by Visual Studio Code editor, and add the following files into `~/catkin_ws/src/oit_pbl_ros_samples/scripts/`. See [Developing inside the ROS container with VSCode](https://github.com/oit-ipbl/portal/blob/main/setup/remote_with_vscode.md).
+    - ファイルをダウンロードしたい場合はリンクをクリックしてから，`Raw`をクリックしてダウンロードしましょう.
+- `bright_dark_game_ros.py`をROSに正しく配置できたら，下記コマンドを実行して，正常に動作するか確認しましょう
+- 以下のコマンドをROSコンテナ内で実行する
+```sh
+chmod u+x bright_dark_game_ros.py
+roslaunch oit_stage_ros navitation.launch
+```
+- 次にWindows側のプログラムをWindowsで起動する．
+```sh
+python start_on_windows_multi.py
+```
+
+- 次に以下のコマンドをROSコンテナ内で実行するとROSを通して`demo()` functionが呼び出され，ROSとWindowsの間で通信が行われる．
+  - `bright_dark_game_ros.py`のみを実行した場合，終了処理がWindows側に送信されないため，`start_on_windows_multi.py`が終了しない．`start_on_windows_multi.py`を終了したければ，Ctr＋Cを送ること．
+
+```sh
+rosrun oit_pbl_ros_samples bright_dark_game_ros.py 
+``` 
+
+- `bright_dark_game_ros.py`が正常に実行できるかを確認できたら，`start_on_ros_single.py`をコピーした`start_on_ros_multi.py`を`~/catkin_ws/src/oit_pbl_ros_samples/scripts/`フォルダ(on ROS)に保存しましょう． 
+- `start_on_ros_multi.py`に`bright_dark_game_ros.py`を呼び出す処理を追加する
+  - `start_on_ros_multi.py`の`process()`内の`end_game()`の前に下記snippetを追加しよう．これは`show_hand_game_ros.py`の`play_show_hand_game()`の次に`bright_dark_game_ros.py`の`play_bright_dark_game()`を呼び出し，結果を受け取るという処理を示している．
+  - `import bright_dark_game_ros as bdg` is also required.
+
+```python
+    print("---bdg---")
+    result_bdg = bdg.play_bright_dark_game()
+    rospy.sleep(5)
+```
+
+下記コマンドを実行して複数のWindows側プログラムとの通信がうまくいくか確認すること
+  - もし，`roslaunch oit_stage_ros navitation.launch`を実行していない場合は実行し，別のターミナルを開いてコマンドを実行すること
+
+- まずWindows側のプログラムをWindowsで起動する．
+```sh
+python start_on_windows_multi.py
+```
+
+- 次に`start_on_ros_multi.py`をROSコンテナ内で実行する
+```sh
+rosrun oit_pbl_ros_samples start_on_ros_multi.py
+```
+- show hand gameとbright dark gameがROSとWindows側プログラム間で通信しながら順番に実施されることを確認すること
 
 
 ## Exercise (integration 2)

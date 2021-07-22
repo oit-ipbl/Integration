@@ -69,31 +69,31 @@ def bright_dark(win_msg):
 
 def judge_game(brightness, ros_order):
     print("mean brightness:", brightness)
-    result = "lose"
-    if ros_order == "bright":
+    result = "[bdg]wrong"
+    if ros_order == "[bdg]bright":
         if brightness > 180:
-            result = "win"
+            result = "[bdg]correct"
     else: # ros_order == "dark"
         if brightness < 50:
-            result = "win"
+            result = "[bdg]correct"
 
     return result
 
 
 def start_game(topic_name_from_win, ros_bridge_tcp):
-    ros_orders = ["bright", "dark"]
+    ros_orders = ["[bdg]bright", "[bdg]dark"]
 
-    # Send start message and wait hand type selected by ROS
+    # Send start message and wait ros_orders selected by ROS
     pub_msg = {
         "op": "publish",
         "topic": topic_name_from_win,
-        "msg": {"data": "O.K! Let's start bright or dark game!"}
+        "msg": {"data": "[bdg]OK_start"}
     }
     message_from_ros = ros_bridge_tcp.wait_response(pub_msg, ros_orders, timeout=30)
     if message_from_ros:
         print("\nReceive from ROS:", message_from_ros, "\n")
 
-    # Decide your hand
+    # brightness value is returned
     window_message = "Keep your screen " + message_from_ros + "!!"
     brightness = bright_dark(window_message)
 
@@ -106,12 +106,13 @@ def start_game(topic_name_from_win, ros_bridge_tcp):
     }
     # Send game result to ROS.
     print(result)
-    ros_bridge_tcp.wait_response(pub_msg, ["OK"], timeout=5)
+    # In this program, ros never return to the following wait_response
+    ros_bridge_tcp.wait_response(pub_msg, ["[bdg]OK_result"], timeout=5)
 
 
 def demo():
 
-    ros_orders = ["bright", "dark"]
+    ros_orders = ["[bdg]bright", "[bdg]dark"]
     message_from_ros = random.choice(ros_orders)
     print("\nReceive from ROS:", message_from_ros, "\n")
 

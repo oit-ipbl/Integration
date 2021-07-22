@@ -186,7 +186,7 @@ rosrun oit_pbl_ros_samples start_on_ros_single.py
 ```
 
 - 新しくWindows側（`show_hand_game_win.py`）とコミュニケーションするROSプログラム(e.x. `show_hand_game_ros.py`)を追加する場合は`start_on_ros_single.py`の下記部分を編集しなければならない
-  - `result = shgr.play_show_hand_game()` は`show_hand_game_ros.py`をモジュールとして呼び出している
+  - `result = shgr.play_show_hand_game()` では`show_hand_game_ros.py`をモジュールとして呼び出している
     - `import show_hand_game_ros as shgr` is also required.
 
 
@@ -201,6 +201,13 @@ def process():
     end_game()
     rospy.loginfo("/* GAME:%s */", result)
 ```
+
+## Exercise (add another service)
+- 先ほどのpracticeではshow_hand_gameとROSのコミュニケーションを実装しました．このExerciseでは，show_hand_gameに以下のbright_darkゲームを追加してください．
+- まず，`bright_dark_game_win.py`をダウンロードし，`code`フォルダ(on windows)に保存しましょう． 
+  - ファイルをダウンロードしたい場合はリンクをクリックしてから，`Raw`をクリックしてダウンロードしましょう.
+  - [bright_dark_game_win.py](./win/start_on_windows_single.py)
+    - ROSとコミュニケーションする画像処理プログラム
 
 
 ## Exercise (integration 2)

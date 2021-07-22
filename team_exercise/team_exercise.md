@@ -32,7 +32,7 @@ If you and your team members have no ideas, the following list may help you.
 - 壁の色を見て何かをする課題について，色を識別してその色をロボットに見せるようなIntegration題材にする
 - Calculation problem
   - Calculate the displayed formula (for example, the addition formula of two-digit numbers) and answer the calculation result with your finger.
-  - Create a calculation problem using random [Challenge [Hands2]](https://github.com/oit-ipbl/image_processing/blob/main/advanced/holistic.md#challengehands2)
+  - Create a calculation problem using ```random``` (see [Challenge [Hands2]](https://github.com/oit-ipbl/image_processing/blob/main/advanced/holistic.md#challengehands2))
 - Staring Contest
   - If you don't laugh for 5 seconds after seeing the image presented by the robot, the human will win.
   - For example, you can use facial landmarks to determine if you laughed.

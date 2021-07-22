@@ -124,7 +124,7 @@ def start_game(topic_name_from_win, ros_bridge_tcp):
     ros_bridge_tcp.wait_response(pub_msg, ["[shg]OK_result"], timeout=5)
 
 
-def demo_DIP_game():
+def demo():
 
     # Decide your hand
     hand_types = ["[shg]left", "[shg]right"]
@@ -140,4 +140,4 @@ def demo_DIP_game():
 
 
 if __name__=="__main__":
-    demo_DIP_game()
+    demo()

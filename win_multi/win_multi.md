@@ -99,18 +99,20 @@ def start_game(topic_name_from_win, ros_bridge_tcp):
   - [start_on_ros_single.py](./ros/start_on_ros_single.py)
     - Windowsで最初に起動し，ROSからのメッセージを待つ．すべての画像処理プログラムはこのモジュールから呼び出される
   - [show_hand_game_ros.py](./ros/show_hand_game_ros.py)
-    - ROSとコミュニケーションする画像処理プログラム
+    - `show_hand_game_win.py`とコミュニケーションするROS側プログラム
 
 #### show_hand_game_ros.py
-- このファイルを実行するためには下記のStepが必要
+- このプログラムの `play_show_hand_game` functionが`show_hand_game_win.py`と通信を行う．
+- 通常，このプログラムは`start_on_ros_single.py` からモジュールとして呼び出されるが，デモ用に単独で呼び出すこともできる
+- このファイルを単独で実行するためには下記のStepが必要
 ```sh
-chmod u+x start_on_ros_single.py
 chmod u+x show_hand_game_ros.py
 roslaunch oit_stage_ros navitation.launch
 ```
-- 次に，別のターミナルを開いて `rosrun oit_pbl_ros_samples start_on_ros_single.py` を実行する
-  - なお，ここで`show_hand_game_ros.py` を単独でテストしたい場合は` rosrun oit_pbl_ros_samples show_hand_game_ros.py` と実行しても良い
-- このプログラムで`demo()` functionは
+- 次にWindows側のプログラムをWindowsで起動する．
+  - `python show_hand_game_win.py`
+    - `python start_on_windows_single.py`でも構いません
+- 次に` rosrun oit_pbl_ros_samples show_hand_game_ros.py` と実行するとROSを通して`demo()` functionが呼び出され，ROSとWindowsの間で通信が行われる
 
 ```python
 def process():

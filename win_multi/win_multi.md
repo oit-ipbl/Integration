@@ -293,7 +293,20 @@ rosrun oit_pbl_ros_samples start_on_ros_multi.py
     - Open `~/catkin_ws/` by Visual Studio Code editor, and add the  file into `~/catkin_ws/src/oit_pbl_ros_samples/scripts/`. See [Developing inside the ROS container with VSCode](https://github.com/oit-ipbl/portal/blob/main/setup/remote_with_vscode.md).
     - ファイルをダウンロードしたい場合はリンクをクリックしてから，`Raw`をクリックしてダウンロードしましょう.
 
-- `start_on_ros_multi.py`に`move_robot_ros.py`を呼び出す処理を追加する
+- `move_robot_ros.py`をROSに正しく配置できたら，下記コマンドをROSコンテナ内で実行して，正常に動作するか確認しましょう
+- 以下のコマンドをROSコンテナ内で実行する
+  - `roslaunch oit_stage_ros navitation.launch` を実行していない場合は実行しましょう
+```sh
+chmod u+x move_robot_ros.py
+```
+
+- 次に以下のコマンドをROSコンテナ内で実行するとROSを通して`move_robot_ros.py`の`demo()` functionが呼び出され，ロボットが所定の場所に移動する．
+
+```sh
+rosrun oit_pbl_ros_samples move_robot_ros.py 
+``` 
+
+- `move_robot_ros.py`が正常に動作することを確認後，`start_on_ros_multi.py`に`move_robot_ros.py`を呼び出す処理を追加する
   - `start_on_ros_multi.py`の`process()`内の`print("---bdg---")`の前に下記snippetを追加しよう．これは`move_robot_ros.py`の`process()`を呼び出し，ロボットを移動させるという処理を示している．
   - `import move_robot_ros.py as mrobot` is also required.
 

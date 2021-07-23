@@ -70,7 +70,7 @@ def start_game(topic_name_from_win, ros_bridge_tcp):
 ```
 
 #### start_on_windows_single.py
-- `show_hand_game_win.py`が正常に実行できるかを確認できたら，`start_on_windows_single.py`に`show_hand_game_win.py`を呼び出す処理を追加し，下記コマンドを実行してROSとの通信を確認すると良い
+- `show_hand_game_win.py`が正常に実行できるかを確認できたら，下記コマンドを実行して`start_on_windows_single.py`から呼び出される`show_hand_game_win.py`がROSとの通信を正しく実施できるか確認すると良い
   - 現在の仕様では，`start_on_windows_single.py`は`while True:`でROSからのメッセージ送信を無限ループで待機するようになっており，ROSから"The end"というメッセージが届くと無限ループを終了する．
 
 ```sh
@@ -178,8 +178,8 @@ def play_show_hand_game():
 ```
 
 #### start_on_ros_single.py
-- `show_hand_game_ros.py`が正常に実行できるかを確認できたら，`start_on_ros_single.py`に`show_hand_game_ros.py`を呼び出す処理を追加し，下記コマンドを実行してWindows側プログラム(`show_hand_game_win.py`)との通信を確認すると良い
-  - もし，`roslaunch oit_stage_ros navitation.launch`を実行していない場合は実行し，別のターミナルでコマンドを実行する
+- `show_hand_game_ros.py`が正常に実行できるかを確認できたら，下記コマンドを実行して`start_on_ros_single.py`と`show_hand_game_ros.py`の両方が正常に動作することを確認すること
+  - ここでもし，`roslaunch oit_stage_ros navitation.launch`を実行していない場合は実行し，別のターミナルでコマンドを実行する
 
 ```sh
 chmod u+x show_hand_game_ros.py
@@ -213,7 +213,7 @@ def process():
 - このプログラムは，ROSが指示する"bright"と"dark"に合わせて，カメラの映像を明るくしたり暗くしたりするゲームです．カメラを照明に向けたり，カメラを手で覆ったりして明るさを調整してみましょう．思い通りにbright/darkの切り替えができない場合は`judge_game`関数内のパラメータを変更してみましょう．
 
 - 保存したら`bright_dark_game_win.py`を実行し，正常に動作するか確認しましょう．
-  - たまに正常に動作しない場合があります．その場合はWindows Terminalを再起動してみよう．
+  - たまに正常に起動しない場合があります．その場合はWindows Terminalを再起動してみよう．
 
 ```sh
 python bright_dark_game_win.py
@@ -226,6 +226,8 @@ python bright_dark_game_win.py
             if message['msg']['data'] == "[bdg]start bright dark game":
                 bdg.start_game(topic_name_from_win, ros_bridge_tcp)
 ```
+
+- これでROS側と通信するbright dark gameプログラムを準備できました
 
 ### ROS side
 

@@ -24,7 +24,7 @@ You have to finish all of [robots](https://github.com/oit-ipbl/robots), [image p
     - ROSとコミュニケーションする画像処理プログラム
 
 #### show_hand_game_win.py
-- このプログラムはmediapipesを利用して，コンピュータが指示した手をユーザがカメラに翳すゲームです
+- このプログラムはmediapipesを利用して，ROSが指示した手をユーザがカメラに翳すゲームです
 - もしあなたがこのプログラムをテストしたければ，あなたはこのプログラムを下記コマンドで実行できる．
   - このコマンドを実行すると`demo()`が呼ばれ，ROSと通信せず`show_hand_game_win.py`の動作をテストできる
   - あなたが画像処理プログラムを作成する場合も，単独で実行できる関数(e.x. demo())を用意することを強くお勧めする．
@@ -34,7 +34,8 @@ python show_hand_game_win.py
 ```
 
 - このプログラムの start_game functionは `start_on_windows_single.py` から呼び出される．
-  - start_game functionでは，ROSとの間でメッセージの送受信が行われる．例えば，`message_from_ros = ros_bridge_tcp.wait_response(pub_msg, hand_types, timeout=30)` では，pub_msgをROSに送信し，hand_typesに含まれる文字列がROSから返ってくることを最大30秒待ち，返り値をmessage_from_rosに保存する
+  - start_game functionでは，ROSとの間でメッセージの送受信が行われる．例えば，`message_from_ros = ros_bridge_tcp.wait_response(pub_msg, hand_types, timeout=30)` では，pub_msgをROSに送信し，hand_typesに含まれる文字列がROSから返ってくることを最大30秒待ち，返り値をmessage_from_rosに保存する．
+    - 第二引数(hand_types)は文字列のリストで，wait_responseはその中に格納されている文字列と完全一致する場合のみ受け取ります．
   - ここで，ROSと交換するメッセージにはこのプログラムに属するメッセージであることを示すprefix(e.x. [shg])を付与することを我々は強く推奨する．
 ```python
 def start_game(topic_name_from_win, ros_bridge_tcp):
@@ -70,7 +71,7 @@ def start_game(topic_name_from_win, ros_bridge_tcp):
 
 #### start_on_windows_single.py
 - `show_hand_game_win.py`が正常に実行できるかを確認できたら，`start_on_windows_single.py`に`show_hand_game_win.py`を呼び出す処理を追加し，下記コマンドを実行してROSとの通信を確認すると良い
-  - 現在の仕様では，`start_on_windows_single.py`は`while True:`でROSからのメッセージ送信を無限ループで待機するようになっている
+  - 現在の仕様では，`start_on_windows_single.py`は`while True:`でROSからのメッセージ送信を無限ループで待機するようになっており，ROSから"The end"というメッセージが届くと無限ループを終了する．
 
 ```sh
 python start_on_windows_single.py
@@ -207,11 +208,13 @@ def process():
 - 先ほどのpracticeではshow_hand_gameとROSのコミュニケーションを実装しました．このExerciseでは，show_hand_gameに以下のbright_darkゲームを追加してください．
 - まず，`bright_dark_game_win.py`をダウンロードし，`code`フォルダ(on windows)に保存しましょう． 
   - ファイルをダウンロードしたい場合はリンクをクリックしてから，`Raw`をクリックしてダウンロードしましょう.
-  - [bright_dark_game_win.py](./win/start_on_windows_single.py)
+  - [bright_dark_game_win.py](./win/bright_dark_game_win.py)
     - ROSとコミュニケーションする画像処理プログラム
+- このプログラムは，ROSが指示する"bright"と"dark"に合わせて，カメラの映像を明るくしたり暗くしたりするゲームです．カメラを照明に向けたり，カメラを手で覆ったりして明るさを調整してみましょう．思い通りにbright/darkの切り替えができない場合は`judge_game`関数内のパラメータを変更してみましょう．
 
 - 保存したら`bright_dark_game_win.py`を実行し，正常に動作するか確認しましょう．
   - たまに正常に動作しない場合があります．その場合はWindows Terminalを再起動してみよう．
+
 ```sh
 python bright_dark_game_win.py
 ```
@@ -275,13 +278,7 @@ rosrun oit_pbl_ros_samples start_on_ros_multi.py
 - show hand gameとbright dark gameがROSとWindows側プログラム間で通信しながら順番に実施されることを確認すること
 
 
-## Exercise (integration 2)
+## Exercise (game and navigation))
 
-Add navigation function between game A and game B. See [Robot control 3](https://github.com/oit-ipbl/robots/blob/main/robot_control/robot_control_03.md#robot-control-3).
+Add navigation function into Exercise(add another service) programs. See [Robot control 3](https://github.com/oit-ipbl/robots/blob/main/robot_control/robot_control_03.md#robot-control-3).
 
-## Challenge (integration 3)
-
-Windows side programs, `play_with_ros_test_a.py` and `play_with_ros_test_b.py` is dummy programs. They just return randomly selected results.
-Modify them to real games using web camera and media-pipe library.
-
-We assume that `play_with_ros_test_a.py` is "Rock, Paper and Scissors" game, and `play_with_ros_test_b.py` is "Finger number count game(指の数を当てるゲームって英語で良いフレーズないですか)".

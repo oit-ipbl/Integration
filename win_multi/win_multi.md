@@ -231,7 +231,7 @@ python bright_dark_game_win.py
 
 ### ROS side
 
-- 次に`bright_dark_game_ros.py`をダウンロードし，`~/catkin_ws/src/oit_pbl_ros_samples/scripts/`フォルダ(on ROS)に保存しましょう． 
+- `bright_dark_game_ros.py`をダウンロードし，`~/catkin_ws/src/oit_pbl_ros_samples/scripts/`フォルダ(on ROS)に保存しましょう． 
   - [bright_dark_game_ros.py](./ros/bright_dark_game_ros.py)
     - `bright_dark_game_win.py`とコミュニケーションするROS側プログラム
     - Open `~/catkin_ws/` by Visual Studio Code editor, and add the following files into `~/catkin_ws/src/oit_pbl_ros_samples/scripts/`. See [Developing inside the ROS container with VSCode](https://github.com/oit-ipbl/portal/blob/main/setup/remote_with_vscode.md).
@@ -282,5 +282,51 @@ rosrun oit_pbl_ros_samples start_on_ros_multi.py
 
 ## Exercise (game and navigation))
 
-Add navigation function into Exercise(add another service) programs. See [Robot control 3](https://github.com/oit-ipbl/robots/blob/main/robot_control/robot_control_03.md#robot-control-3).
+- Add navigation function into Exercise(add another service) programs. See [Robot control 3](https://github.com/oit-ipbl/robots/blob/main/robot_control/robot_control_03.md#robot-control-3).
 
+- Windows sideはExercise(Add another service)と同じで良い
+
+### ROS side
+- `move_robot_ros.py`をダウンロードし，`~/catkin_ws/src/oit_pbl_ros_samples/scripts/`フォルダ(on ROS)に保存しましょう． 
+  - [move_robot_ros.py](./ros/move_robot_ros.py)
+    - 指定した場所にロボットを動かすプログラム
+    - Open `~/catkin_ws/` by Visual Studio Code editor, and add the  file into `~/catkin_ws/src/oit_pbl_ros_samples/scripts/`. See [Developing inside the ROS container with VSCode](https://github.com/oit-ipbl/portal/blob/main/setup/remote_with_vscode.md).
+    - ファイルをダウンロードしたい場合はリンクをクリックしてから，`Raw`をクリックしてダウンロードしましょう.
+
+- `start_on_ros_multi.py`に`move_robot_ros.py`を呼び出す処理を追加する
+  - `start_on_ros_multi.py`の`process()`内の`print("---bdg---")`の前に下記snippetを追加しよう．これは`move_robot_ros.py`の`process()`を呼び出し，ロボットを移動させるという処理を示している．
+  - `import move_robot_ros.py as mrobot` is also required.
+
+```python
+    print("---nav---")
+    rospy.loginfo("%s:Started", rospy.get_name())
+    mrobot.process(x=2.0, y=2.5, angle=270)
+    rospy.loginfo("%s:Exiting", rospy.get_name())        
+    rospy.sleep(10)
+```
+
+- 次に下記snippetを`end_game()`の前に追加する
+
+```python
+    print("---nav---")
+    rospy.loginfo("%s:Started", rospy.get_name())
+    mrobot.process(x=3.0, y=3.6, angle=90)
+    rospy.loginfo("%s:Exiting", rospy.get_name())        
+    rospy.sleep(5)
+```
+
+- これらのコードスニペットにより，Show Hand Gameが終わった後とBright Dark Gameの後に，ロボットが指定の座標まで移動する
+
+下記コマンドを実行して複数のWindows側プログラムとの通信とロボットナビゲーションがうまくいくか確認すること
+  - もし，`roslaunch oit_stage_ros navitation.launch`を実行していない場合は実行し，別のターミナルを開いてコマンドを実行すること
+
+- まずWindows側のプログラムをWindowsで起動する．
+```sh
+python start_on_windows_multi.py
+```
+
+- 次に`start_on_ros_multi.py`をROSコンテナ内で実行する
+```sh
+rosrun oit_pbl_ros_samples start_on_ros_multi.py
+```
+- show hand gameとbright dark gameがROSとWindows側プログラム間で通信しながら順番に実施されることとROSのシミュレータ上でロボットが移動することを確認すること

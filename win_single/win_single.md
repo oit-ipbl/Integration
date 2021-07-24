@@ -99,46 +99,42 @@ import rospy
 from std_msgs.msg import String
 from utils import RosWinMessenger
 
+def process():
+    rospy.sleep(10)
+    node_name = rospy.get_name()
 
-class CommunicationTestNode(object):
-    def __init__(self):
-        pass
+    rate = rospy.Rate(2)  # Keep loop with 2hz
+    # for send message to windows
+    # Create a publisher which can publish String type topics.
+    to_win_pub = rospy.Publisher("/from_ros", String, queue_size=1)
 
-    def process(self):
-        node_name = rospy.get_name()
-        rospy.sleep(10)
-        rate = rospy.Rate(2)  # Keep loop with 2hz
-        # Create a publisher which can publish String type topics.
-        to_win_pub = rospy.Publisher("/from_ros", String, queue_size=1)
-        # Wrapper class to receive messages from Windows
-        messenger = RosWinMessenger(to_win_pub, "/from_windows")
+    # for recieve message from windows
+    # Wrapper class to receive messages from Windows
+    messenger = RosWinMessenger(to_win_pub, "/from_windows")
 
+    for i in range(0, 10):   
         # Publish messages to Windows
-        for i in range(0, 10):
-            message = "Hello! this is ROS " + str(i)
-            rospy.loginfo("%s:Sending message to win(%d):%s",
-                          node_name, i, message)
-            # See https://github.com/oit-ipbl/robots/blob/main/basics/basics_01.md#summary-of-talkerpy
-            to_win_pub.publish(message) 
-            rate.sleep()
+        message = "Hello! this is ROS " + str(i)
+        rospy.loginfo("%s:Sending message to win(%d):%s", node_name, i, message)
+        # See https://github.com/oit-ipbl/robots/blob/main/basics/basics_01.md#summary-of-talkerpy
+        to_win_pub.publish(message) 
+
+        rate.sleep()
 
         # Receive messages from Windows
         for i in range(0, 10):
             message = messenger.wait_response(timeout=5)
             if message is not None:
-                rospy.loginfo("%s:Receive from win(%d):%s",
-                              node_name, i, message)
-
+                rospy.loginfo("%s:Receive from win(%d):%s", node_name, i, message)
 
 def main():
     script_name = os.path.basename(__file__)
     rospy.init_node(os.path.splitext(script_name)[0])
     rospy.sleep(0.5)  # rospy.Time.now() returns 0, without this sleep.
 
-    node = CommunicationTestNode()
     rospy.loginfo("%s:Started", rospy.get_name())
 
-    node.process()
+    process()
     rospy.loginfo("%s:Exiting", rospy.get_name())
 
 

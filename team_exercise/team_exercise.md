@@ -68,4 +68,4 @@ Make a presentation slide which explains your games.
 
 - The slide submission URL will open after Aug. 9.
 - The URL and submission method will be published at SLACK #general channel.
-- You have to submit the slide until Aug. 28.
+- You have to submit the slide until Aug. 20.

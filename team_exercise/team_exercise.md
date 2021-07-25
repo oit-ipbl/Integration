@@ -5,67 +5,82 @@
 ---
 
 ## Objectives
-
-Integrate image processing and robotics techniques and develop one or more mini-games which includes both of the technologies.  
-The mini-games can be used as a subset of the final competition.
-
+- We have two exercises for each team.
+1. Integrate image processing and robotics techniques and develop one  mini-game which includes both of the technologies. The mini-game can be used as a subset of the final competition.
 Additionaly, all teams have to submit a slide to explain the mini-game.
+2. Creating youtube videos for cross-cultural communication
 
 ## Prerequisite
 
-You have to finish all of [robots](https://github.com/oit-ipbl/robots) and [image processing](https://github.com/oit-ipbl/image_processing).
+- All members of your team have to finish all exercises.
+  - [robots](https://github.com/oit-ipbl/robots)
+  - [image processing](https://github.com/oit-ipbl/image_processing) 
+  - integration 
+    - [Message exchange between a Windows program and a ROS node](win_single/win_single.md)
+    - [Message exchange between a ROS node and multi Windows programs](win_multi/win_multi.md)
 
-**Team members coorporation is the most essential factor.**
 
-## Exercise (team development 1)
+## deadline
+- The slide, programs and youtube video url submission URL will open after Aug. 9.
+- The URL and submission method will be published at SLACK #general channel.
+- You have to submit the products until Aug. 20.
 
-Implement one or more mini-games, which include windows side image processing technology and ROS side robotics technology.
+## Exercise1 (team development)
 
-**You must complete this with team members!**
+- Implement one mini-game, which includes windows side image processing technology and ROS side robotics technology.
+  - The mini-game must contains at least two image processing games, and at least one robot movement on ROS.
 
-Break down the task into some pieces, and assign them to all members.
+- **You must complete this with team members!**
+  - Break down the mini-game development into some tasks, and assign them to all members.
+- We recommend developing together in the form of pair programming in the beginning.
+  - Pair programming is a programming style in which two people look at the same screePair programming is a Pair programming is a 
+  - Please make use of Pop and Miro.
+    - See [Communication tools](https://github.com/oit-ipbl/portal/blob/main/setup/commtools.md)
+- Here are some ideas to help you develop your team mini-game. Please refer to them.
+  - They are just ideas, and we can not ensure anything about them.  
+Use the list as a hint for the exercise and let's discuss with your team members.
 
 ### Mini-game ideas
 
 If you and your team members have no ideas, the following list may help you.
+- There are red and blue pillars around the robot on the stage simulator. The robot sends the color name (e.x. red and blue) of the objects around it to the Windows side. In windows side, python program presents the received color name from ROS side to the user, so the user presents a colored paper or object. When the color name specified by the user from the Windows side to the ROS side, the robot moves toward the pillar of the sent color.
 
-- 壁の色を見て何かをする課題について，色を識別してその色をロボットに見せるようなIntegration題材にする
 - Calculation problem
   - Calculate the displayed formula (for example, the addition formula of two-digit numbers) and answer the calculation result with your finger.
   - Create a calculation problem using ```random``` (see [Challenge [Hands2]](https://github.com/oit-ipbl/image_processing/blob/main/advanced/holistic.md#challengehands2)).
 - Staring Contest
   - If you don't laugh for 5 seconds after seeing the image presented by the robot, the human will win.
   - For example, you can use facial landmarks to determine if you laughed.
-- ロボットが示す手を両手で出す
 - Follow Me.
   - Move the object on the stage simulator, and control the robot to follow it.
   - User can send start signal of follow me with hand gesture that can be recognized by Windows side program using media-pipe.
   - cf. [This movie](https://www.youtube.com/watch?v=8-CcklPzvyo) shows an example follow me robot. It's not a simulation but real robots.
 
-They are just ideas, and we can not ensure possibility of them.  
-Use the list as a hint for the exercise and let's discuss with your team members.
-
 **Make interesting games!**
 
-## Exercise (team development 2)
+- Make a presentation slide which explains your games.
 
-Make a presentation slide which explains your games.
+  - Team name and member list.
+  - Overview of the mini game created by tour team.
+  - Screen shots.
+  - Game Rules and how to play
+  - Team members' roles.
+    - Leader.
+    - Algorithm desiginer.
+    - Programmer (image, ROS etc.)
+    - Slide designer.
+    - Article writer.
+    - Supporter.
+    - ...
 
-- Team name and member list.
-- Overview of your games.
-- Screen shots.
-- Algorithms.
-- Team members' roles.
-  - Leader.
-  - Algorithm desiginer.
-  - Programmer (image, ROS etc.)
-  - Slide designer.
-  - Article writer.
-  - Supporter.
-  - ...
-
-### Slide submission
-
-- The slide submission URL will open after Aug. 9.
-- The URL and submission method will be published at SLACK #general channel.
-- You have to submit the slide until Aug. 20.
+## Exercise2 (異文化コミュニケーションとyoutube動画の作成)
+- 日本とタイの料理を紹介するビデオを作成し，youtubeで公開しよう
+- ルールは以下のとおりです
+  - 日本料理とタイ料理をそれぞれ1つ以上紹介すること
+  - 言語は英語
+  - 作成・公開するビデオは一本だけでOKです
+  - できる限り全員がビデオに出演すること
+  - 著作権に留意すること
+  - 時間制限は特にありませんが，10分以内程度が目安です
+- 後日チームのビデオを全員で閲覧し，どの料理が一番おいしそうだったか投票します
+- 提出時はyoutube動画をUnlisted or Public(in Japanese, 限定公開 or 公開)で公開し，URLをフォームに入力してください

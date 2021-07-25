@@ -251,8 +251,8 @@ $ rosrun oit_pbl_ros_samples communication_test.py
   [INFO] [1626179902.746700, 113.700000]: /communication_test:Exiting
   ```
 
-  - You'd think "Where is `Hello this is Windows 2` ?". It cannot know. Actually, that message is missing.
-  - ROS style communication using publisher and subscriber is not so reliable.
+  - You'd think where is the message, `Hello this is Windows 2`. We can't know because the message is lost.
+  - Exchange communication using publisher and subscriber with the ROS is not so reliable.
   - You have to consider this fact to integrate Windows and ROS programs. The most simple way is to send the same message multiple times.
 
 #######################

@@ -255,6 +255,7 @@ $ rosrun oit_pbl_ros_samples communication_test.py
   - ROS style communication using publisher and subscriber is not so reliable.
   - You have to consider this fact to integrate Windows and ROS programs. The most simple way is to send the same message multiple times.
 
+#######################
 ### Increase communication reliability
 
 The wrapper classes have usefule methods.

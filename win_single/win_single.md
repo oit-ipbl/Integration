@@ -15,7 +15,7 @@ You have to finish all of [robots](https://github.com/oit-ipbl/robots) and [imag
 
 ## Practice()
 
-### Make a Windows side python program
+### Make a python program on Windows
 
 - Save the following two files into `C:\oit\py21\code` on Windows.
   - If you want to download the files, click the following links and click a `Raw` button. After that, right-click on the screen, select the save a page to a file with a new name.
@@ -37,6 +37,7 @@ from rosbridge_tcp import RosBridgeTCP
 from ros_utils import build_ros_array_msg
 
 def main():
+    # for send message to ROS container
     # Wrapper class for TCP/IP communication
     ros_bridge_tcp = RosBridgeTCP()
     # Prepare to publish ROS topic from Windows
@@ -46,6 +47,8 @@ def main():
         "topic": topic_name_from_win, # Topic name
         "type": "std_msgs/String"     # Topic type
     }
+
+    # for recieve message from ROS container
     ros_bridge_tcp.send_message(advertise_msg) # Send advertise message to ROS
     # Prepare to subscribe to ROS topic
     topic_name_from_ros = "/from_ros"
@@ -54,6 +57,7 @@ def main():
         "topic": topic_name_from_ros, # Topic name
         "type": "std_msgs/String"     # Topic type
     }
+    
     ros_bridge_tcp.send_message(subscribe_msg) # Send subscribe message to ROS
     tm = time.time()
     received = 0
@@ -84,10 +88,14 @@ if __name__ == '__main__':
     main()
 ```
 
-### Make a ROS node
+### Make a ROS node in ROS Container
 
 - The communication process with the Windows named `communication_test.py` is as follows. Please save it to `~/catkin_ws/src/oit_pbl_ros_samples/` in ROS cintainer and edit it with VSCode. 
   - See [Developing inside the ROS container with VSCode](https://github.com/oit-ipbl/portal/blob/main/setup/remote_with_vscode.md).
+  - Allow the permission for the execution for this file.
+  ```
+  chmod u+x communication_test.py
+  ```
 
 ```python
 #!/usr/bin/env python
@@ -146,29 +154,29 @@ if __name__ == '__main__':
         exit(1)
 ```
 
-### Run
+### Run the programs to exchange messages
 
-#### ROS side
+#### Launch the ROS navigation and run the program in ROS Container
 
-At first, launch the simulator.
+  - launch the ROS navigation.
+  ```shell
+  $ roslaunch oit_stage_ros navigation.launch
+  ```
 
-```shell
-$ roslaunch oit_stage_ros navigation.launch
-```
+  - Open another terminal emulator and run `communication_test.py` like the following.
+  ```shell
+  $ rosrun oit_pbl_ros_samples communication_test.py
+  ```
 
-After a while run a sample program, `communication_test.py`.
+#### Run the program on Windows within about 10 seconds after launching the ROS programs
 
-```shell
-$ rosrun oit_pbl_ros_samples communication_test.py
-```
+  - Open the windows terminal (or powershell) and move to `C:\oit\py21\code` 
+  - Run `communication_with_ros_test.py` like the following.
+  ```cmd
+  C:\oit\py21\code>python ./communication_with_ros_test.py
+  ```
 
-#### Run Windows side program within about 10 seconds
-
-```cmd
-C:\oit\py21\code>python ./communication_with_ros_test.py
-```
-
-- Windows side console output.
+- You can see the following output in the Windows terminal (or powershell). (Windows side)
 
 ```cmd
  ./communication_with_ros_test.py
@@ -193,7 +201,7 @@ Sending ros message: {'op': 'publish', 'topic': '/from_windows', 'msg': {'data':
 Sending ros message: {'op': 'publish', 'topic': '/from_windows', 'msg': {'data': 'Hello this is Windows 9'}}
 ```
 
-- ROS side terminal output.
+- You can see the following output in the Terminal Emulator. (ROS node)
 
 ```shell
 $ rosrun oit_pbl_ros_samples communication_test.py
@@ -228,23 +236,23 @@ $ rosrun oit_pbl_ros_samples communication_test.py
 
 ### Important notice
 
-See this output.
+- Please see the following example output.
 
-```shell
-$ rosrun oit_pbl_ros_samples communication_test.py
-...
-[INFO] [1626179893.690161, 104.700000]: /communication_test:Receive from win(1):Hello this is Windows 0
-[INFO] [1626179894.692005, 105.700000]: /communication_test:Receive from win(2):Hello this is Windows 1
-[INFO] [1626179896.709420, 107.700000]: /communication_test:Receive from win(3):Hello this is Windows 3
-[INFO] [1626179897.713940, 108.700000]: /communication_test:Receive from win(4):Hello this is Windows 4
-[INFO] [1626179898.722476, 109.700000]: /communication_test:Receive from win(5):Hello this is Windows 5
-...
-[INFO] [1626179902.746700, 113.700000]: /communication_test:Exiting
-```
+  ```shell
+  $ rosrun oit_pbl_ros_samples communication_test.py
+  ...
+  [INFO] [1626179893.690161, 104.700000]: /communication_test:Receive from win(1):Hello this is Windows 0
+  [INFO] [1626179894.692005, 105.700000]: /communication_test:Receive from win(2):Hello this is Windows 1
+  [INFO] [1626179896.709420, 107.700000]: /communication_test:Receive from win(3):Hello this is Windows 3
+  [INFO] [1626179897.713940, 108.700000]: /communication_test:Receive from win(4):Hello this is Windows 4
+  [INFO] [1626179898.722476, 109.700000]: /communication_test:Receive from win(5):Hello this is Windows 5
+  ...
+  [INFO] [1626179902.746700, 113.700000]: /communication_test:Exiting
+  ```
 
-Where is `Hello this is Windows 2` ? I don't know. It's missing.
-ROS style communication using publisher and subscriber is not so reliable.
-You have to consider this fact to integrate Windows and ROS programs. The most simple way is send same message multiple times.
+  - You'd think "Where is `Hello this is Windows 2` ?". It cannot know. Actually, that message is missing.
+  - ROS style communication using publisher and subscriber is not so reliable.
+  - You have to consider this fact to integrate Windows and ROS programs. The most simple way is to send the same message multiple times.
 
 ### Increase communication reliability
 

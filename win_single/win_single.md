@@ -230,9 +230,10 @@ $ rosrun oit_pbl_ros_samples communication_test.py
 
 ### Sequence of the programs
 
-- At first, ROS node, `communication_test.py`, sends messages to the Windows side program, `communication_with_ros_test.py`. The messages are like this `Hello! this is ROS 0`
-- Windows side, `communication_with_ros_test.py`, outputs the received messages like this `{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 0'}, 'op': 'publish'}`. This communication process is repeated 10 times.
-- After that the Windows side program, `communication_with_ros_test.py`, sends messages and ROS node receieves them. The exchanged messages are like this, `Hello this is Windows 0`.
+- At first, `communication_test.py` in ROS node sends messages to the Windows side. The sending messages from ROS node are like `Hello! this is ROS 0` in this example.
+- And `communication_with_ros_test.py` on Windows receives the sent messages. The received messages is outputted like `{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 0'}, 'op': 'publish'}`. This communication process is repeated 10 times.
+- After that `communication_with_ros_test.py` on Windows sends messages. And sent messages are recieved by `communication_test.py` in ROS node.
+- The recieved messages are outputted like `Hello this is Windows 0`.
 
 ### Important notice
 

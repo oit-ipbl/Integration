@@ -25,10 +25,8 @@ You have to finish all of [robots](https://github.com/oit-ipbl/robots) and [imag
   ```
   python -m pip install bson
   ```
-- Make a python file named `communication_with_ros_test.py` into `C:\oit\py21\code` on Windows and edit it with VSCode.
+- The communication process with the ROS named 'communication_with_ros_test.py' is as follows. Please save it to C:\oit\py21\code on Windows and edit it with VSCode. 
   - See [image processing development](https://github.com/oit-ipbl/portal/blob/main/setup/python%2Bvscode.md).
-
-Type the following template. It's OK copy and paste.
 
 ```python
 #!/usr/bin/env python
@@ -88,9 +86,8 @@ if __name__ == '__main__':
 
 ### Make a ROS node
 
-Open `~/catkin_ws/src/oit_pbl_ros_samples/` by Visual Studio Code editor, and edit `communication_test.py`. See [Developing inside the ROS container with VSCode](https://github.com/oit-ipbl/portal/blob/main/setup/remote_with_vscode.md).
-
-Type the following template. It's OK copy and paste.
+- The communication process with the Windows named `communication_test.py` is as follows. Please save it to `~/catkin_ws/src/oit_pbl_ros_samples/` in ROS cintainer and edit it with VSCode. 
+  - See [Developing inside the ROS container with VSCode](https://github.com/oit-ipbl/portal/blob/main/setup/remote_with_vscode.md).
 
 ```python
 #!/usr/bin/env python
@@ -124,11 +121,11 @@ def process():
 
         rate.sleep()
 
-        # Receive messages from Windows
-        for i in range(0, 10):
-            message = messenger.wait_response(timeout=5)
-            if message is not None:
-                rospy.loginfo("%s:Receive from win(%d):%s", node_name, i, message)
+    # Receive messages from Windows
+    for i in range(0, 10):
+        message = messenger.wait_response(timeout=5)
+        if message is not None:
+            rospy.loginfo("%s:Receive from win(%d):%s", node_name, i, message)
 
 def main():
     script_name = os.path.basename(__file__)

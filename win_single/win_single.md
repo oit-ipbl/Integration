@@ -6,21 +6,24 @@
 
 ## Objectives
 
-Make a windonws program and a ROS node which can communicate with each other via TCP/IP.
+Let's make message exchange programs on windows and a ROS node that can communicate with each other via TCP/IP.
+This page explains how to exchange messages between many image processing programs on Windows and the ROS node.
 
 ## Prerequisite
 
 You have to finish all of [robots](https://github.com/oit-ipbl/robots) and [image processing](https://github.com/oit-ipbl/image_processing).
 
-## Practice
+## Practice()
 
 ### Make a Windows side python program
 
-- Download the following 2 files into Windows directory `C:\oit\py21\code`.
+- Save the following two files into `C:\oit\py21\code` on Windows.
+  - If you want to download the files, click the following links and click a `Raw` button. After that, right-click on the screen, select the save a page to a file with a new name.
   - [ros_utils.py](https://raw.githubusercontent.com/oit-ipbl/Integration/main/ros_utils.py?token=AAOIT6P3QT2X54UTN6FAHLLA72Z3M)
   - [rosbridge_tcp.py](https://raw.githubusercontent.com/oit-ipbl/Integration/main/rosbridge_tcp.py?token=AAOIT6PZGCQYHDAXF2DTVZ3A72Z7A)
-- Install `bson` package into image processing development environment with `python -m pip install bson`.
-- Make a python file named `communication_with_ros_test.py` in Windows directory `C:\oit\py21\code` and edit it with VSCode.
+- Install `bson` package into the image processing development environment by using the following command.
+  `python -m pip install bson`
+- Make a python file named `communication_with_ros_test.py` into `C:\oit\py21\code` on Windows and edit it with VSCode.
   - See [image processing development](https://github.com/oit-ipbl/portal/blob/main/setup/python%2Bvscode.md).
 
 Type the following template. It's OK copy and paste.
@@ -32,7 +35,6 @@ import random
 import time
 from rosbridge_tcp import RosBridgeTCP
 from ros_utils import build_ros_array_msg
-
 
 def main():
     # Wrapper class for TCP/IP communication
@@ -77,7 +79,6 @@ def main():
         ros_bridge_tcp = None
     except Exception as e:
         print(str(e))
-
 
 if __name__ == '__main__':
     main()

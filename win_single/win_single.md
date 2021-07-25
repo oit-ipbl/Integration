@@ -252,8 +252,8 @@ $ rosrun oit_pbl_ros_samples communication_test.py
   ```
 
   - You'd think where is the message, `Hello this is Windows 2`. We can't know because the message is lost.
-  - Exchange communication using publisher and subscriber with the ROS is not so reliable.
-  - You have to consider this fact to integrate Windows and ROS programs. The most simple way is to send the same message multiple times.
+  - Exchange communication using `publisher` and `subscriber` over the ROS is not so reliable.
+  - You have to consider that to integrate Windows and ROS programs. The most simple way is to send the same message multiple times.
 
 #######################
 ### Increase communication reliability

@@ -11,14 +11,12 @@ import show_hand_game_ros as shgr
 def end_game():
     rospy.sleep(3)
     node_name = rospy.get_name()
-    # Prepare to play Windows game A
-    # Specify topic names to commnicate with play_with_ros_test_a.py
+    # Specify topic names to commnicate with windows side
     to_win_pub = rospy.Publisher("/from_ros", String, queue_size=1)
     messenger = RosWinMessenger(to_win_pub, "/from_windows")
-    # Start game sequence A
     rospy.loginfo("%s:Try to end game", node_name)
 
-    # Send game start signal to Windows, and wait Windows side response.
+    # Send The end signal to Windows, and wait Windows side response.
     message_from_win = messenger.wait_response(
         "The end", None, timeout=30)
     if message_from_win:

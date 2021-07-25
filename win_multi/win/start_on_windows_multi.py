@@ -43,7 +43,7 @@ def main():
                 }
                 print("Every game has finished!")
                 # Send message "Every game has finished!" to ros.
-                ros_bridge_tcp.wait_response(pub_msg, ["Every game has finished"], timeout=5)
+                ros_bridge_tcp.wait_response(pub_msg, ["Every game has finished!"], timeout=5)
                 break
         else:
             continue

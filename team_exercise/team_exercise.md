@@ -33,7 +33,7 @@ Additionaly, all teams have to submit a slide to explain the mini-game.
 - **You must complete this with team members!**
   - Break down the mini-game development into some tasks, and assign them to all members.
 - We recommend developing together in the form of pair programming in the beginning.
-  - Pair programming is a programming style in which two people look at the same screePair programming is a Pair programming is a 
+  - Pair programming is a programming style in which two people share the same screen and develop together. 
   - Please make use of Pop and Miro.
     - See [Communication tools](https://github.com/oit-ipbl/portal/blob/main/setup/commtools.md)
 - Here are some ideas to help you develop your team mini-game. Please refer to them.

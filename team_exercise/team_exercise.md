@@ -73,14 +73,16 @@ If you and your team members have no ideas, the following list may help you.
     - Supporter.
     - ...
 
-## Exercise2 (異文化コミュニケーションとyoutube動画の作成)
-- 日本とタイの料理を紹介するビデオを作成し，youtubeで公開しよう
-- ルールは以下のとおりです
-  - 日本料理とタイ料理をそれぞれ1つ以上紹介すること
-  - 言語は英語
-  - 作成・公開するビデオは一本だけでOKです
-  - できる限り全員がビデオに出演すること
-  - 著作権に留意すること
-  - 時間制限は特にありませんが，10分以内程度が目安です
-- 後日チームのビデオを全員で閲覧し，どの料理が一番おいしそうだったか投票します
-- 提出時はyoutube動画をUnlisted or Public(in Japanese, 限定公開 or 公開)で公開し，URLをフォームに入力してください
+## Exercise2 (Cross-cultural communication and creating youtube videos)
+- Let's create a video to introduce the foods in each other's country and publish it on youtube.
+- The rules are as follows.
+  - English only (exclude name of foods)
+  - You need to introduce at least one Japanese and Thai food in your video.
+  - You need to create and publish at least one video.
+  - The all students should appear in the video. (If it is difficult, voice appearance is acceptable)
+  - Please take care of the copyrights.
+  - Time length is not limited, but 10 minutes or less is desirable.
+- We plan to release all team videos somewhere between August 21-28
+- Everyone will watch the videos of the other teams and votes on which food looked delicious.
+- Upload your video as "Unlisted" or "Public" to youtube, and then submit the URL of your video to the following MS forms.
+  - MS forms: link

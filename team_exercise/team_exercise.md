@@ -73,7 +73,7 @@ If you and your team members have no ideas, the following list may help you.
     - Supporter.
     - ...
 
-## Exercise2 (Cross-cultural communication and creating youtube videos)
+## Exercise2 (Cross-cultural communication and creating youtube video)
 - Let's create a video to introduce the foods in each other's country and publish it on youtube.
 - The rules are as follows.
   - English only (exclude name of foods)

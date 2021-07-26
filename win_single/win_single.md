@@ -25,8 +25,9 @@ You have to finish all of [robots](https://github.com/oit-ipbl/robots) and [imag
   ```
   python -m pip install bson
   ```
-- The communication process with the ROS named 'communication_with_ros_test.py' is as follows. Please save it to C:\oit\py21\code on Windows and edit it with VSCode. 
+- The communication process with the ROS named `communication_with_ros_test.py` is as follows. Please save it to C:\oit\py21\code on Windows and edit it with VSCode. 
   - See [image processing development](https://github.com/oit-ipbl/portal/blob/main/setup/python%2Bvscode.md).
+
 
 ```python
 #!/usr/bin/env python

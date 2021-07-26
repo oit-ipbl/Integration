@@ -25,7 +25,7 @@ You have to finish all of [robots](https://github.com/oit-ipbl/robots) and [imag
   ```
   python -m pip install bson
   ```
-- The communication process with the ROS named `communication_with_ros_test.py` is as follows. Please save it to C:\oit\py21\code on Windows and edit it with VSCode. 
+- The communication process with the ROS named `communication_with_ros_test.py` is as follows. Please save it to `C:\oit\py21\code` on Windows and edit it with VSCode. 
   - See [image processing development](https://github.com/oit-ipbl/portal/blob/main/setup/python%2Bvscode.md).
 
 
@@ -91,7 +91,7 @@ if __name__ == '__main__':
 
 ### Make a ROS node in ROS Container
 
-- The communication process with the Windows named `communication_test.py` is as follows. Please save it to `~/catkin_ws/src/oit_pbl_ros_samples/` in ROS cintainer and edit it with VSCode. 
+- The communication process with the Windows named `communication_test.py` is as follows. Please save it to `~/catkin_ws/src/oit_pbl_ros_samples/scripts/` in ROS cintainer and edit it with VSCode. 
   - See [Developing inside the ROS container with VSCode](https://github.com/oit-ipbl/portal/blob/main/setup/remote_with_vscode.md).
   - Allow the permission for the execution for this file.
   ```

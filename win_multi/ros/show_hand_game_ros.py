@@ -19,7 +19,7 @@ def play_show_hand_game():
 
     # Send game start signal to Windows, and wait Windows side response.
     message_from_win = messenger.wait_response(
-        "[shg]start show hand game", ["[shg]OK_start"], timeout=30)
+        "[shg]start", ["[shg]start"], timeout=30)
     if message_from_win:
         rospy.loginfo("%s:Receive from win:%s",
                           node_name, message_from_win)

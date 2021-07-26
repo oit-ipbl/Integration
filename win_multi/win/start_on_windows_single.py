@@ -30,17 +30,17 @@ def main():
         messages = ros_bridge_tcp.wait() #Wait for message from ROS and assign the response into 'messages'
         for message in messages:
             # If message['msg']['data'] is "[shg]start show hand game", then shg.star_game is invoked
-            if message['msg']['data'] == "[shg]start show hand game":
+            if message['msg']['data'] == "[shg]start":
                 shgw.start_game(topic_name_from_win, ros_bridge_tcp)
             if message['msg']['data'] == "The end":
                 pub_msg = {
                     "op": "publish",
                     "topic": topic_name_from_win,
-                    "msg": {"data": "Every game has finished!"}
+                    "msg": {"data": "[All]finished"}
                 }
                 print("Every game has finished!")
                 # Send message "Every game has finished!" to ros.
-                ros_bridge_tcp.wait_response(pub_msg, ["Every game has finished!"], timeout=5)
+                ros_bridge_tcp.wait_response(pub_msg, ["[All]finished"], timeout=5)
                 break
         else:
             continue

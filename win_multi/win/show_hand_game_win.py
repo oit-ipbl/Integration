@@ -101,7 +101,7 @@ def start_game(topic_name_from_win, ros_bridge_tcp):
     pub_msg = {
         "op": "publish",
         "topic": topic_name_from_win,
-        "msg": {"data": "[shg]OK_start"}
+        "msg": {"data": "[shg]start"}
     }
     message_from_ros = ros_bridge_tcp.wait_response(pub_msg, hand_types, timeout=30)
     if message_from_ros:
@@ -121,7 +121,7 @@ def start_game(topic_name_from_win, ros_bridge_tcp):
     # Send game result to ROS.
     print(result)
     # In this program, ros never return to the following wait_response
-    ros_bridge_tcp.wait_response(pub_msg, ["[shg]OK_result"], timeout=5)
+    ros_bridge_tcp.wait_response(pub_msg, ["[shg]result"], timeout=5)
 
 
 def demo():

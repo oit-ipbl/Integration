@@ -2,10 +2,7 @@
 
 - You have to read all documents.
 - You have to do `practice` tasks and `exercise` tasks which are in each section.
-- There are some challenge tasks.
-
-- We strongly recommend all students read the documents on all exercises because there would be many hints or important information helping you done the final tasks.
-
+- We strongly recommend all students read the documents on all exercises because there would be many hints or important information helping you done the final development for iPBL.
 
 - Index
   - [Message exchange between a Windows program and a ROS node](win_single/win_single.md)

@@ -19,7 +19,7 @@ You have to finish all of [robots](https://github.com/oit-ipbl/robots), [image p
 - Save the following two files into `C:\oit\py21\code` on Windows.
   - If you want to download the files, click the following links and then download from a `Raw` button.
   - [start_on_windows_single.py](./win/start_on_windows_single.py)
-    - This program is the module that can call the all image processing programs on Windows and runs first. When executed, this program waits for messages from the ROS and calls the image processing program according to the received message.
+    - This program runs first. This is the module that can call the all image processing programs on Windows. When executed, this program waits for messages from the ROS and calls the image processing program according to the received message.
   - [show_hand_game_win.py](./win/show_hand_game_win.py)
     - This program runs an image processing game while communicating with the ROS.
 

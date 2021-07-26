@@ -204,7 +204,7 @@ def process():
 ```
 
 ### Reference
-- The following figure shows the flow of programs when you run "show_hand_game_ros.py" alone on the ROS after running "start_on_windows_single.py" on Windows.
+- The following figure shows the flow of programs when you run `show_hand_game_ros.py` alone on the ROS after running `start_on_windows_single.py` on Windows.
 <image src="./communication_win-ros.png">
 
 ## Exercise (add another service)

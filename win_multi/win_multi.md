@@ -112,7 +112,7 @@ python start_on_windows_single.py
 - Open `~/catkin_ws/` by Visual Studio Code editor, and add the following files into `~/catkin_ws/src/oit_pbl_ros_samples/scripts/`. See [Developing inside the ROS container with VSCode](https://github.com/oit-ipbl/portal/blob/main/setup/remote_with_vscode.md).
 
 - Save the following two files into `~/catkin_ws/src/oit_pbl_ros_samples/scripts/` on ROS.
-  - If you want to download the files, click the following links and then download from a `Raw` button.
+  - If you want to download the files, click the following links and then download from the `Raw` button.
   - [start_on_ros_single.py](./ros/start_on_ros_single.py)
     - This program runs on the ROS container, and then calls `show_hand_game_ros.py` which send the message to the image processing program on Windows.
   - [show_hand_game_ros.py](./ros/show_hand_game_ros.py)

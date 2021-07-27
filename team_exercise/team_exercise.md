@@ -84,6 +84,6 @@ If you and your team members have no ideas, the following list may help you.
   - Please take care of the copyrights.
   - Time length is not limited, but 10 minutes or less is desirable.
 - We plan to release all team videos somewhere between August 21-28.
-- Everyone will watch the videos of the other teams and votes on which food looked delicious.
+- Everyone will watch the videos of the other teams and votes for the video that makes them want to try the foods the most.
 - Upload your video as "Unlisted" or "Public" (in Japanese, "限定公開" or "公開") to youtube, and then submit the URL of your video to the following MS forms.
   - MS forms: link (now, no link)

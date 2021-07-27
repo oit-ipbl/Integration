@@ -20,7 +20,7 @@ def end_game():
 
     # Send The end signal to Windows, and wait Windows side response.
     message_from_win = messenger.wait_response(
-        "The end", None, timeout=30)
+        "[all]end", None, timeout=30)
     if message_from_win:
         rospy.loginfo("%s:Receive from win:%s",
                       node_name, message_from_win)

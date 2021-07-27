@@ -49,7 +49,7 @@ def start_game(topic_name_from_win, ros_bridge_tcp):
     pub_msg = {
         "op": "publish",
         "topic": topic_name_from_win,
-        "msg": {"data": "[shg]OK_start"}
+        "msg": {"data": "[shg]start"}
     }
     message_from_ros = ros_bridge_tcp.wait_response(pub_msg, hand_types, timeout=30)
     if message_from_ros:
@@ -69,7 +69,7 @@ def start_game(topic_name_from_win, ros_bridge_tcp):
     # Send game result to ROS.
     print(result)
     # In this program, ros never return to the following wait_response
-    ros_bridge_tcp.wait_response(pub_msg, ["[shg]OK_result"], timeout=5)
+    ros_bridge_tcp.wait_response(pub_msg, ["[shg]result"], timeout=5)
 ```
 
 #### start_on_windows_single.py
@@ -91,17 +91,17 @@ C:\\...\code> python start_on_windows_single.py
         messages = ros_bridge_tcp.wait() #Wait for message from ROS and assign the response into 'messages'
         for message in messages:
             # If message['msg']['data'] is "[shg]start show hand game", then shg.star_game is invoked
-            if message['msg']['data'] == "[shg]start show hand game":
-                shg.start_game(topic_name_from_win, ros_bridge_tcp)
-            if message['msg']['data'] == "The end":
+            if message['msg']['data'] == "[shg]start":
+                shgw.start_game(topic_name_from_win, ros_bridge_tcp)
+            if message['msg']['data'] == "[all]end":
                 pub_msg = {
                     "op": "publish",
                     "topic": topic_name_from_win,
-                    "msg": {"data": "Every game has finished!"}
+                    "msg": {"data": "[all]finished"}
                 }
                 print("Every game has finished!")
                 # Send message "Every game has finished!" to ros.
-                ros_bridge_tcp.wait_response(pub_msg, ["Every game has finished!"], timeout=5)
+                ros_bridge_tcp.wait_response(pub_msg, ["[all]finished"], timeout=5)
                 break
         else:
             continue
@@ -140,7 +140,7 @@ $ rosrun oit_pbl_ros_samples show_hand_game_ros.py
 
 ```python
 def play_show_hand_game():
-    rospy.sleep(3)
+    rospy.sleep(3) 
     node_name = rospy.get_name()
     # Prepare to play show hand game
     # Specify topic names to commnicate with show hand game
@@ -151,7 +151,7 @@ def play_show_hand_game():
 
     # Send game start signal to Windows, and wait Windows side response.
     message_from_win = messenger.wait_response(
-        "[shg]start show hand game", ["[shg]OK_start"], timeout=30)
+        "[shg]start", ["[shg]start"], timeout=30)
     if message_from_win:
         rospy.loginfo("%s:Receive from win:%s",
                           node_name, message_from_win)
@@ -175,7 +175,7 @@ def play_show_hand_game():
             "%s:Timeout. can't get show hand game result on windows", node_name)
         return "[shg]timeout"
     rospy.sleep(3)
-    return message_from_win
+    return message_from_win            
 ```
 
 #### start_on_ros_single.py
@@ -229,7 +229,7 @@ C:\\...\code> python bright_dark_game_win.py
   - The following code calls the `start_game` function in `bright_dark_game_win.py`.
 
 ```python
-            if message['msg']['data'] == "[bdg]start bright dark game":
+            if message['msg']['data'] == "[bdg]start":
                 bdg.start_game(topic_name_from_win, ros_bridge_tcp)
 ```
 

@@ -35,15 +35,15 @@ def main():
                 shgw.start_game(topic_name_from_win, ros_bridge_tcp)
             if message['msg']['data'] == "[bdg]start":
                 bdg.start_game(topic_name_from_win, ros_bridge_tcp)
-            if message['msg']['data'] == "The end":
+            if message['msg']['data'] == "[all]end":
                 pub_msg = {
                     "op": "publish",
                     "topic": topic_name_from_win,
-                    "msg": {"data": "[All]finished"}
+                    "msg": {"data": "[all]finished"}
                 }
                 print("Every game has finished!")
                 # Send message "Every game has finished!" to ros.
-                ros_bridge_tcp.wait_response(pub_msg, ["[All]finished"], timeout=5)
+                ros_bridge_tcp.wait_response(pub_msg, ["[all]finished"], timeout=5)
                 break
         else:
             continue

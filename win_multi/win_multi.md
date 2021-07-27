@@ -30,7 +30,7 @@ You have to finish all of [robots](https://github.com/oit-ipbl/robots), [image p
   - We strongly recommend to implement the `demo` function like this even if you create new original image processing games.
 
 ```sh
-python show_hand_game_win.py
+C:\\...\code> python show_hand_game_win.py
 ```
 
 - This program's `start_game` function is called from `start_on_windows_single.py` when the recieved ROS message is "[shg]start show hand game".
@@ -77,7 +77,7 @@ def start_game(topic_name_from_win, ros_bridge_tcp):
   - Now, `start_on_windows_single.py` waits in the infinite loop for a message from the ROS with `while True:`, and exits the infinite loop when the message "The end" is recieved from ROS.
 
 ```sh
-python start_on_windows_single.py
+C:\\...\code> python start_on_windows_single.py
 ```
 
 - If you want to add a new image processing program that communicates with ROS (e.g. `show_hand_game_win.py`), you have to edit the following part of `start_on_windows_single.py`.
@@ -124,16 +124,16 @@ python start_on_windows_single.py
   - In order to run this program alone, the following steps are required on the ROS before running the command.
   - Allow the parmission for execution and run the launch program.
     ```sh
-    chmod u+x show_hand_game_ros.py
-    roslaunch oit_stage_ros navitation.launch
+    $ chmod u+x show_hand_game_ros.py
+    $ roslaunch oit_stage_ros navitation.launch
     ```
   - Next, run the image processing program on Windows.
     ```sh
-    python start_on_windows_single.py
+    C:\\...\code> python start_on_windows_single.py
     ```
 - When run alone by using the following command, this program will run the game `show hand game` while communicating with Windows and exit without stopping the infinite loop on the Windows side.
 ```sh
-rosrun oit_pbl_ros_samples show_hand_game_ros.py
+$ rosrun oit_pbl_ros_samples show_hand_game_ros.py
 ```
 
 - The communication process between the ROS and Windows in `show_hand_game_ros.py` is as follows. Please read and understand the comments carefully.
@@ -183,8 +183,8 @@ def play_show_hand_game():
   - if you did not run the launch program, allow the parmission for execution and run the launch program on other terminal `roslaunch oit_stage_ros navitation.launch
 `.
 ```sh
-chmod u+x show_hand_game_ros.py
-rosrun oit_pbl_ros_samples start_on_ros_single.py
+$ chmod u+x show_hand_game_ros.py
+$ rosrun oit_pbl_ros_samples start_on_ros_single.py
 ```
 
 - If you want to add a new ROS program (e.g. `show_hand_game_ros.py`) that communicates with Windows side, you have to edit the following part of `start_on_ros_single.py` as follows.
@@ -222,7 +222,7 @@ def process():
   - In some cases, it may not start properly. Then, try restarting the Windows Terminal.
 
 ```sh
-python bright_dark_game_win.py
+C:\\...\code> python bright_dark_game_win.py
 ```
 - After confirming that the above program are executed correctly, copy `start_on_windows_single.py`, rename it to `start_on_windows_multi.py` and save it in the `code` folder (on Windows).
 - Next, add the following if statement to the next line of `shg.start_game(topic_name_from_win, ros_bridge_tcp)` in `start_on_windows_multi.py` and add the import statement `import bright_dark_game_win as bdg` at the beginning of the program.
@@ -246,20 +246,20 @@ python bright_dark_game_win.py
 
 
 ```sh
-chmod u+x bright_dark_game_ros.py
+$ chmod u+x bright_dark_game_ros.py
 ```
 
 - Next, start the following program on Windows side.
 
 ```sh
-python start_on_windows_multi.py
+C:\\...\code> python start_on_windows_multi.py
 ```
 
 - Next, if you run the following command in the ROS container, the `demo()` function of the `bright_dark_game_ros.py` will be called through ROS, and communication will be established between ROS side and Windows side.
   - If you run only `bright_dark_game_ros.py`, `start_on_windows_multi.py` will not be terminated because the termination process is not sent to Windows side from ROS side. If you want to exit `start_on_windows_multi.py`, send `Ctr+C`.
 
 ```sh
-rosrun oit_pbl_ros_samples bright_dark_game_ros.py 
+$ rosrun oit_pbl_ros_samples bright_dark_game_ros.py 
 ``` 
 
 - Once you have verified that `bright_dark_game_ros.py` runs correctly, copy `start_on_ros_single.py`, rename it to `start_on_ros_multi.py`, and save it in the `~/catkin_ws/src/oit_ pbl_ros_samples/scripts/` folder (in the ROS container). 
@@ -279,12 +279,12 @@ rosrun oit_pbl_ros_samples bright_dark_game_ros.py
 
 - First, start the program on the Windows side.
 ```sh
-python start_on_windows_multi.py
+C:\\...\code> python start_on_windows_multi.py
 ```
 
 - Next, run `start_on_ros_multi.py` in the ROS container.
 ```sh
-rosrun oit_pbl_ros_samples start_on_ros_multi.py
+$ rosrun oit_pbl_ros_samples start_on_ros_multi.py
 ```
 - Make sure that the show hand game and the bright dark game are executed in sequence while communicating between the ROS side and Windows side programs.
 
@@ -306,13 +306,13 @@ rosrun oit_pbl_ros_samples start_on_ros_multi.py
   - If you did not run the launch program, run the launch program on other terminal `roslaunch oit_stage_ros navitation.launch`
 
 ```sh
-chmod u+x move_robot_ros.py
+$ chmod u+x move_robot_ros.py
 ```
 
 - Next, run the following command in the ROS container, and the `demo()` function of `move_robot_ros.py` will be called through ROS, and the robot will move to the specified location on the stage simulator.
 
 ```sh
-rosrun oit_pbl_ros_samples move_robot_ros.py 
+$ rosrun oit_pbl_ros_samples move_robot_ros.py 
 ``` 
 
 - After checking that `move_robot_ros.py` works correctly, add a procedure to `start_on_ros_multi.py` that calls `move_robot_ros.py`.
@@ -344,11 +344,11 @@ rosrun oit_pbl_ros_samples move_robot_ros.py
 
 - First, start the program on the Windows side.
 ```sh
-python start_on_windows_multi.py
+C:\\...\code> python start_on_windows_multi.py
 ```
 
 - Next, run `start_on_ros_multi.py` in the ROS container.
 ```sh
-rosrun oit_pbl_ros_samples start_on_ros_multi.py
+$ rosrun oit_pbl_ros_samples start_on_ros_multi.py
 ```
 - Make sure that the show hand game and the bright dark game are executed in sequence while communicating between the ROS side and Windows side programs, and the robot moves to the specified coordinates on the stage simulator.

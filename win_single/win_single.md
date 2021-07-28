@@ -257,8 +257,8 @@ $ rosrun oit_pbl_ros_samples communication_test.py
   - You have to consider that to integrate Windows and ROS programs. The most simple way is to send the same message multiple times.
 
 ## Practice(Complicated Interactions between windows side and ros side)
-[](- このPBLにおいては，ROS側からWindows側にメッセージを送ることで，通信がスタートする
-- 以降では，Windows sideでROS sideからの通信を待った後，交互にWindows siteとROS sideでメッセージを送りあう処理を実装する)
+<!-- - このPBLにおいては，ROS側からWindows側にメッセージを送ることで，通信がスタートする
+- 以降では，Windows sideでROS sideからの通信を待った後，交互にWindows siteとROS sideでメッセージを送りあう処理を実装する -->
 - Exchange communication will start when the starting message is sent from the Windows side to the ROS side, under this iPBL situation.
 - Hereafter, the program using exchange messages between the Windows side and the ROS side is implemented, after the above starting process has been done. 
 
@@ -325,16 +325,16 @@ def play_rps_game():
     return message_from_win      
 ```
 
-### プログラムの実行順序
-[](- もし起動していなければ，あなたはまずnavigation.launchをROSコンテナで起動しなければならない)
+### The execution order of these programs
+<!-- - もし起動していなければ，あなたはまずnavigation.launchをROSコンテナで起動しなければならない -->
 - At first, you have to run the navigation program on the ROS side if you have not run that yet.
 
 ```sh
 $ roslaunch oit_stage_ros navigation.launch
 ```
 
-[](- 次に，Windows sideのプログラムを実行しましょう(rps_game_win.py)
-  - このプログラムはROSからのメッセージを無限ループで待ちます)
+<!-- - 次に，Windows sideのプログラムを実行しましょう(rps_game_win.py)
+  - このプログラムはROSからのメッセージを無限ループで待ちます -->
 - You have to run the rps_game_win.py on the Windows side.
     - This program waits for the messages from the ROS as the infinite loop after this program is running.
 
@@ -342,12 +342,12 @@ $ roslaunch oit_stage_ros navigation.launch
 C:\\...\code> python rps_game_win.py
 ```
 
-[](- 最後に，ROS sideのプログラム（rps_game_ros.py）を実行しましょう
+<!-- - 最後に，ROS sideのプログラム（rps_game_ros.py）を実行しましょう
   - このプログラムは最初に[rps]startというメッセージをWindows sideに送信します
-  - 実行権限を付与するのを忘れないこと)
-- Next, you have to run the rps_game_ros.py on the ROS side.
-    - This program sends the message, "[ros]start", to the Windows side.
-    - [CAUTION] This program has to give execute permission.
+  - 実行権限を付与するのを忘れないこと-->
+- Finally, you have to run the `rps_game_ros.py` on the ROS side.
+    - This program sends the message, "\[ros\]start", to the Windows side.
+    - \[CAUTION\] This program has to give execute permission.
 
 ```sh
 $ chmod u+x rps_game_ros.py

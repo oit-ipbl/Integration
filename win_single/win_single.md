@@ -354,8 +354,10 @@ $ chmod u+x rps_game_ros.py
 $ rosrun oit_pbl_ros_samples rps_game_ros.py
 ```
 
-### 実行結果
-- ROSsideの[rps]startメッセージをWindows sideが受信したあと，ゲームが実行されていることを確認しましょう
+### Execution results
+<!-- - ROSsideの[rps]startメッセージをWindows sideが受信したあと，ゲームが実行されていることを確認しましょう -->
+- Please confirm that the game process is running after the Windows side has been received the message, "\[rps\] start", sending from the ROS side.
+
 #### Windows side
 ```cmd
 Wait ROS messages...

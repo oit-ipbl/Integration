@@ -33,7 +33,7 @@ You have to finish all of [robots](https://github.com/oit-ipbl/robots), [image p
 C:\\...\code> python show_hand_game_win.py
 ```
 
-- This program's `start_game` function is called from `start_on_windows_single.py` when the recieved ROS message is "[shg]start show hand game".
+- This program's `start_game` function is called from `start_on_windows_single.py` when the recieved ROS message is "[shg]start".
   - `start_game` function communicates with the ROS by sending/recieving message.
   - For example, `message_from_ros = ros_bridge_tcp.wait_response(pub_msg, hand_types, timeout=30)` runs the following three steps
     1. It sends message `pub_msg` to the ROS

@@ -119,7 +119,7 @@ C:\\...\code> python start_on_windows_single.py
     - This is the ROS program which communicates with the image processing game (i.e. `show_hand_game_win.py`) on the Windows.
 
 #### show_hand_game_ros.py
-- `play_show_hand_game` function of this program communicats with `show_hand_game_win.py` on Windows.
+- `play_show_hand_game` function of this program communicates with `show_hand_game_win.py` on Windows.
 - Although this program is generally called from `start_on_ros_signal.py` as module, you can also run this program alone.
   - In order to run this program alone, the following steps are required on the ROS before running the command.
   - Allow the parmission for execution and run the launch program.

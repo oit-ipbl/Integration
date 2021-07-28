@@ -43,7 +43,8 @@ Use the list as a hint for the exercise and let's discuss with your team members
 ### Mini-game ideas
 
 If you and your team members have no ideas, the following list may help you.
-- There are red and blue pillars around the robot on the stage simulator. The robot sends the color name (e.x. red and blue) of the objects around it to the Windows side. In windows side, python program presents the received color name from ROS side to the user, so the user presents a colored paper or object. When the color name specified by the user from the Windows side to the ROS side, the robot moves toward the pillar of the sent color.
+- Color identification
+  - There are red and blue pillars around the robot on the stage simulator. The robot sends the color name (e.x. red and blue) of the objects around it to the Windows side. In windows side, python program presents the received color name from ROS side to the user, so the user presents a colored paper or object. When the color name specified by the user from the Windows side to the ROS side, the robot moves toward the pillar of the sent color.
 
 - Calculation problem
   - Calculate the displayed formula (for example, the addition formula of two-digit numbers) and answer the calculation result with your finger.

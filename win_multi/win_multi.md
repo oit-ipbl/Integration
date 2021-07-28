@@ -125,7 +125,7 @@ C:\\...\code> python start_on_windows_single.py
   - Allow the parmission for execution and run the launch program.
     ```sh
     $ chmod u+x show_hand_game_ros.py
-    $ roslaunch oit_stage_ros navitation.launch
+    $ roslaunch oit_stage_ros navigation.launch
     ```
   - Next, run the image processing program on Windows.
     ```sh
@@ -180,7 +180,7 @@ def play_show_hand_game():
 
 #### start_on_ros_single.py
 - After confirming that `show_hand_game_ros.py` runs normally, Confirm that both `start_on_ros_single.py` and `show_hand_game_ros.py` runs normally, as following command.
-  - if you did not run the launch program, allow the parmission for execution and run the launch program on other terminal `roslaunch oit_stage_ros navitation.launch
+  - if you did not run the launch program, allow the parmission for execution and run the launch program on other terminal `roslaunch oit_stage_ros navigation.launch
 `.
 ```sh
 $ chmod u+x show_hand_game_ros.py
@@ -242,7 +242,7 @@ C:\\...\code> python bright_dark_game_win.py
     - This is a ROS-side program to communicate with `bright_dark_game_win.py`.
     - Open `~/catkin_ws/` in the ROS container by Visual Studio Code editor, and add the above file into `~/catkin_ws/src/oit_pbl_ros_samples/scripts/ . See [Developing inside the ROS container with VSCode](https://github.com/oit-ipbl/portal/blob/main/setup/remote_with_vscode.md).
 - After you have correctly placed `bright_dark_game_ros.py` in the ROS container, run the following command in the ROS container to see if it works correctly.
-  - If you did not run the launch program, run the launch program on other terminal `roslaunch oit_stage_ros navitation.launch`
+  - If you did not run the launch program, run the launch program on other terminal `roslaunch oit_stage_ros navigation.launch`
 
 
 ```sh
@@ -275,7 +275,7 @@ $ rosrun oit_pbl_ros_samples bright_dark_game_ros.py
 - This code fragment shows the process of executing `play_bright_dark_game()` in `bright_dark_game_ros.py` and receiving the result.
 
 - Execute the following command to check if the communication between multiple services on the ROS-side and Windows-side works.
-  - If you did not run the launch program, run the launch program on other terminal `roslaunch oit_stage_ros navitation.launch`
+  - If you did not run the launch program, run the launch program on other terminal `roslaunch oit_stage_ros navigation.launch`
 
 - First, start the program on the Windows side.
 ```sh
@@ -303,7 +303,7 @@ $ rosrun oit_pbl_ros_samples start_on_ros_multi.py
 
 - After you have correctly placed `move_robot_ros.py` in the ROS container, run the following command in the ROS container to see if it works correctly.
 - Run the following command in the ROS container
-  - If you did not run the launch program, run the launch program on other terminal `roslaunch oit_stage_ros navitation.launch`
+  - If you did not run the launch program, run the launch program on other terminal `roslaunch oit_stage_ros navigation.launch`
 
 ```sh
 $ chmod u+x move_robot_ros.py
@@ -340,7 +340,7 @@ $ rosrun oit_pbl_ros_samples move_robot_ros.py
 - With these code snippets, the robot will move to the specified coordinates after the Show Hand Game and after the Bright Dark Game, respectively.
 
 - Execute the following commands to check if the communication between multiple services in the ROS side and Windows side and robot navigation on the stage simulator works properly.
-  - If you did not run the launch program, run the launch program on other terminal `roslaunch oit_stage_ros navitation.launch`
+  - If you did not run the launch program, run the launch program on other terminal `roslaunch oit_stage_ros navigation.launch`
 
 - First, start the program on the Windows side.
 ```sh

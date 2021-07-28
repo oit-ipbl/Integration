@@ -37,8 +37,7 @@ C:\\...\code> python show_hand_game_win.py
   - `start_game` function communicates with the ROS by sending/receiving message.
   - For example, `message_from_ros = ros_bridge_tcp.wait_response(pub_msg, hand_types, timeout=30)` runs the following three steps
     1. It sends message `pub_msg` to the ROS
-    1. It waits up to `timeout=30` seconds for a message that matching the string in `hand_types` to receive. (* `hand_types` is the `list`, and it has any strings)
-      - If this argument is None, receive every message and finish waiting.
+    1. It waits up to `timeout=30` seconds for a message that matching the string in `hand_types` to receive. (* `hand_types` is the `list`, and it has any strings) If this 2nd argument is None, it receives every message and stops waiting.
     1. It store the received message in the `message_from_ros` if the message is received
   - It is strongly recommended to prefix the messages sent/received with the prefix corresponding to the image processing game which is communicating with the ROS.
 ```python

@@ -33,12 +33,13 @@ You have to finish all of [robots](https://github.com/oit-ipbl/robots), [image p
 C:\\...\code> python show_hand_game_win.py
 ```
 
-- This program's `start_game` function is called from `start_on_windows_single.py` when the recieved ROS message is "[shg]start".
-  - `start_game` function communicates with the ROS by sending/recieving message.
+- This program's `start_game` function is called from `start_on_windows_single.py` when the received ROS message is "[shg]start".
+  - `start_game` function communicates with the ROS by sending/receiving message.
   - For example, `message_from_ros = ros_bridge_tcp.wait_response(pub_msg, hand_types, timeout=30)` runs the following three steps
     1. It sends message `pub_msg` to the ROS
-    1. It waits up to `timeout=30` seconds for a message that matching the string in `hand_types` to recieve. (* `hand_types` is the `list`, and it has any strings)
-    1. It store the recieved message in the `message_from_ros` if the message is recieved
+    1. It waits up to `timeout=30` seconds for a message that matching the string in `hand_types` to receive. (* `hand_types` is the `list`, and it has any strings)
+      - If this argument is None, receive every message and finish waiting.
+    1. It store the received message in the `message_from_ros` if the message is received
   - It is strongly recommended to prefix the messages sent/received with the prefix corresponding to the image processing game which is communicating with the ROS.
 ```python
 def start_game(topic_name_from_win, ros_bridge_tcp):
@@ -74,7 +75,7 @@ def start_game(topic_name_from_win, ros_bridge_tcp):
 
 #### start_on_windows_single.py
 - After confirming that `show_hand_game_win.py` runs normally at alone, Confirm that the game `show_hand_game` called from `start_on_windows_single.py` runs normally while communicating with the ROS, as following command.
-  - Now, `start_on_windows_single.py` waits in the infinite loop for a message from the ROS with `while True:`, and exits the infinite loop when the message "[all]end" is recieved from the ROS.
+  - Now, `start_on_windows_single.py` waits in the infinite loop for a message from the ROS with `while True:`, and exits the infinite loop when the message "[all]end" is received from the ROS.
 
 ```sh
 C:\\...\code> python start_on_windows_single.py

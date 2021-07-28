@@ -74,7 +74,7 @@ def start_game(topic_name_from_win, ros_bridge_tcp):
 
 #### start_on_windows_single.py
 - After confirming that `show_hand_game_win.py` runs normally at alone, Confirm that the game `show_hand_game` called from `start_on_windows_single.py` runs normally while communicating with the ROS, as following command.
-  - Now, `start_on_windows_single.py` waits in the infinite loop for a message from the ROS with `while True:`, and exits the infinite loop when the message "The end" is recieved from ROS.
+  - Now, `start_on_windows_single.py` waits in the infinite loop for a message from the ROS with `while True:`, and exits the infinite loop when the message "[all]end" is recieved from the ROS.
 
 ```sh
 C:\\...\code> python start_on_windows_single.py
@@ -82,7 +82,7 @@ C:\\...\code> python start_on_windows_single.py
 
 - If you want to add a new image processing program that communicates with ROS (e.g. `show_hand_game_win.py`), you have to edit the following part of `start_on_windows_single.py`.
   - `if message['msg']['data'] == "[shg]start show hand game":` is the conditional expression that will be True when the message `[shg]start show hand game` is received from the ROS.
-  - `shg.start_game(topic_name_from_win, ros_bridge_tcp)` calls `start_game` function of the image processing program (i.e. `show_hand_game_win.py`) that communicates with ROS.
+  - `shg.start_game(topic_name_from_win, ros_bridge_tcp)` calls `start_game` function of the image processing program (i.e. `show_hand_game_win.py`) that communicates with the ROS.
     - `import show_hand_game_win as shg` is also required.
 
 

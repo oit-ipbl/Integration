@@ -6,24 +6,28 @@
 
 ## Objectives
 
-Make a windonws program and a ROS node which can communicate with each other via TCP/IP.
+Let's make message exchange programs on windows and a ROS node that can communicate with each other via TCP/IP.
+This page explains how to exchange messages between many image processing programs on Windows and the ROS node.
 
 ## Prerequisite
 
 You have to finish all of [robots](https://github.com/oit-ipbl/robots) and [image processing](https://github.com/oit-ipbl/image_processing).
 
-## Practice
+## Practice(Exchange messages between Windows and ROS container)
 
-### Make a Windows side python program
+### Make a python program on Windows
 
-- Download the following 2 files into Windows directory `C:\oit\py21\code`.
-  - [ros_utils.py](https://raw.githubusercontent.com/oit-ipbl/Integration/main/ros_utils.py?token=AAOIT6P3QT2X54UTN6FAHLLA72Z3M)
-  - [rosbridge_tcp.py](https://raw.githubusercontent.com/oit-ipbl/Integration/main/rosbridge_tcp.py?token=AAOIT6PZGCQYHDAXF2DTVZ3A72Z7A)
-- Install `bson` package into image processing development environment with `python -m pip install bson`.
-- Make a python file named `communication_with_ros_test.py` in Windows directory `C:\oit\py21\code` and edit it with VSCode.
+- Save the following two files into `C:\oit\py21\code` on Windows.
+  - If you want to download the files, click the following links and click a `Raw` button. After that, right-click on the screen, select the save a page to a file with a new name.
+    - [ros_utils.py](https://raw.githubusercontent.com/oit-ipbl/Integration/main/ros_utils.py?token=AAOIT6P3QT2X54UTN6FAHLLA72Z3M)
+    - [rosbridge_tcp.py](https://raw.githubusercontent.com/oit-ipbl/Integration/main/rosbridge_tcp.py?token=AAOIT6PZGCQYHDAXF2DTVZ3A72Z7A)
+- Install `bson` package into the image processing development environment by using the following command.
+  ```
+  C:\\...\code> python -m pip install bson
+  ```
+- The communication process with the ROS named `communication_with_ros_test.py` is as follows. Please save it to `C:\oit\py21\code` on Windows and edit it with VSCode. 
   - See [image processing development](https://github.com/oit-ipbl/portal/blob/main/setup/python%2Bvscode.md).
 
-Type the following template. It's OK copy and paste.
 
 ```python
 #!/usr/bin/env python
@@ -33,8 +37,8 @@ import time
 from rosbridge_tcp import RosBridgeTCP
 from ros_utils import build_ros_array_msg
 
-
 def main():
+    # for send message to ROS container
     # Wrapper class for TCP/IP communication
     ros_bridge_tcp = RosBridgeTCP()
     # Prepare to publish ROS topic from Windows
@@ -44,6 +48,8 @@ def main():
         "topic": topic_name_from_win, # Topic name
         "type": "std_msgs/String"     # Topic type
     }
+
+    # for recieve message from ROS container
     ros_bridge_tcp.send_message(advertise_msg) # Send advertise message to ROS
     # Prepare to subscribe to ROS topic
     topic_name_from_ros = "/from_ros"
@@ -52,6 +58,7 @@ def main():
         "topic": topic_name_from_ros, # Topic name
         "type": "std_msgs/String"     # Topic type
     }
+    
     ros_bridge_tcp.send_message(subscribe_msg) # Send subscribe message to ROS
     tm = time.time()
     received = 0
@@ -78,16 +85,18 @@ def main():
     except Exception as e:
         print(str(e))
 
-
 if __name__ == '__main__':
     main()
 ```
 
-### Make a ROS node
+### Make a ROS node in ROS Container
 
-Open `~/catkin_ws/src/oit_pbl_ros_samples/` by Visual Studio Code editor, and edit `communication_test.py`. See [Developing inside the ROS container with VSCode](https://github.com/oit-ipbl/portal/blob/main/setup/remote_with_vscode.md).
-
-Type the following template. It's OK copy and paste.
+- The communication process with the Windows named `communication_test.py` is as follows. Please save it to `~/catkin_ws/src/oit_pbl_ros_samples/scripts/` in ROS cintainer and edit it with VSCode. 
+  - See [Developing inside the ROS container with VSCode](https://github.com/oit-ipbl/portal/blob/main/setup/remote_with_vscode.md).
+  - Allow the permission for the execution for this file.
+  ```
+  $ chmod u+x communication_test.py
+  ```
 
 ```python
 #!/usr/bin/env python
@@ -99,46 +108,42 @@ import rospy
 from std_msgs.msg import String
 from utils import RosWinMessenger
 
+def process():
+    rospy.sleep(10)
+    node_name = rospy.get_name()
 
-class CommunicationTestNode(object):
-    def __init__(self):
-        pass
+    rate = rospy.Rate(2)  # Keep loop with 2hz
+    # for send message to windows
+    # Create a publisher which can publish String type topics.
+    to_win_pub = rospy.Publisher("/from_ros", String, queue_size=1)
 
-    def process(self):
-        node_name = rospy.get_name()
-        rospy.sleep(10)
-        rate = rospy.Rate(2)  # Keep loop with 2hz
-        # Create a publisher which can publish String type topics.
-        to_win_pub = rospy.Publisher("/from_ros", String, queue_size=1)
-        # Wrapper class to receive messages from Windows
-        messenger = RosWinMessenger(to_win_pub, "/from_windows")
+    # for recieve message from windows
+    # Wrapper class to receive messages from Windows
+    messenger = RosWinMessenger(to_win_pub, "/from_windows")
 
+    for i in range(0, 10):   
         # Publish messages to Windows
-        for i in range(0, 10):
-            message = "Hello! this is ROS " + str(i)
-            rospy.loginfo("%s:Sending message to win(%d):%s",
-                          node_name, i, message)
-            # See https://github.com/oit-ipbl/robots/blob/main/basics/basics_01.md#summary-of-talkerpy
-            to_win_pub.publish(message) 
-            rate.sleep()
+        message = "Hello! this is ROS " + str(i)
+        rospy.loginfo("%s:Sending message to win(%d):%s", node_name, i, message)
+        # See https://github.com/oit-ipbl/robots/blob/main/basics/basics_01.md#summary-of-talkerpy
+        to_win_pub.publish(message) 
 
-        # Receive messages from Windows
-        for i in range(0, 10):
-            message = messenger.wait_response(timeout=5)
-            if message is not None:
-                rospy.loginfo("%s:Receive from win(%d):%s",
-                              node_name, i, message)
+        rate.sleep()
 
+    # Receive messages from Windows
+    for i in range(0, 10):
+        message = messenger.wait_response(timeout=5)
+        if message is not None:
+            rospy.loginfo("%s:Receive from win(%d):%s", node_name, i, message)
 
 def main():
     script_name = os.path.basename(__file__)
     rospy.init_node(os.path.splitext(script_name)[0])
     rospy.sleep(0.5)  # rospy.Time.now() returns 0, without this sleep.
 
-    node = CommunicationTestNode()
     rospy.loginfo("%s:Started", rospy.get_name())
 
-    node.process()
+    process()
     rospy.loginfo("%s:Exiting", rospy.get_name())
 
 
@@ -150,32 +155,32 @@ if __name__ == '__main__':
         exit(1)
 ```
 
-### Run
+### Run the programs to exchange messages
 
-#### ROS side
+#### Launch the ROS navigation and run the program in ROS Container
 
-At first, launch the simulator.
+  - launch the ROS navigation.
+  ```shell
+  $ roslaunch oit_stage_ros navigation.launch
+  ```
 
-```shell
-$ roslaunch oit_stage_ros navigation.launch
-```
+  - Open another terminal emulator and run `communication_test.py` like the following.
+  ```shell
+  $ rosrun oit_pbl_ros_samples communication_test.py
+  ```
 
-After a while run a sample program, `communication_test.py`.
+#### Run the program on Windows within about 10 seconds after launching the ROS programs
 
-```shell
-$ rosrun oit_pbl_ros_samples communication_test.py
-```
+  - Open the windows terminal (or powershell) and move to `C:\oit\py21\code` 
+  - Run `communication_with_ros_test.py` like the following.
+  ```cmd
+  C:\\...\code> python ./communication_with_ros_test.py
+  ```
 
-#### Run Windows side program within about 10 seconds
+- You can see the following output in the Windows terminal (or powershell). (Windows side)
 
 ```cmd
-C:\oit\py21\code>python ./communication_with_ros_test.py
-```
-
-- Windows side console output.
-
-```cmd
- ./communication_with_ros_test.py
+C:\\...\code> python ./communication_with_ros_test.py
 {'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 1'}, 'op': 'publish'}
 {'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 2'}, 'op': 'publish'}
 {'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 3'}, 'op': 'publish'}
@@ -197,7 +202,7 @@ Sending ros message: {'op': 'publish', 'topic': '/from_windows', 'msg': {'data':
 Sending ros message: {'op': 'publish', 'topic': '/from_windows', 'msg': {'data': 'Hello this is Windows 9'}}
 ```
 
-- ROS side terminal output.
+- You can see the following output in the Terminal Emulator. (ROS node)
 
 ```shell
 $ rosrun oit_pbl_ros_samples communication_test.py
@@ -226,200 +231,155 @@ $ rosrun oit_pbl_ros_samples communication_test.py
 
 ### Sequence of the programs
 
-- At first, ROS node, `communication_test.py`, sends messages to the Windows side program, `communication_with_ros_test.py`. The messages are like this `Hello! this is ROS 0`
-- Windows side, `communication_with_ros_test.py`, outputs the received messages like this `{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 0'}, 'op': 'publish'}`. This communication process is repeated 10 times.
-- After that the Windows side program, `communication_with_ros_test.py`, sends messages and ROS node receieves them. The exchanged messages are like this, `Hello this is Windows 0`.
+- At first, `communication_test.py` in ROS node sends messages to the Windows side. The sending messages from ROS node are like `Hello! this is ROS 0` in this example.
+- And `communication_with_ros_test.py` on Windows receives the sent messages. The received messages is outputted like `{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 0'}, 'op': 'publish'}`. This communication process is repeated 10 times.
+- After that `communication_with_ros_test.py` on Windows sends messages. And sent messages are recieved by `communication_test.py` in ROS node.
+- The recieved messages are outputted like `Hello this is Windows 0`.
 
 ### Important notice
 
-See this output.
+- Please see the following example output.
 
-```shell
-$ rosrun oit_pbl_ros_samples communication_test.py
-...
-[INFO] [1626179893.690161, 104.700000]: /communication_test:Receive from win(1):Hello this is Windows 0
-[INFO] [1626179894.692005, 105.700000]: /communication_test:Receive from win(2):Hello this is Windows 1
-[INFO] [1626179896.709420, 107.700000]: /communication_test:Receive from win(3):Hello this is Windows 3
-[INFO] [1626179897.713940, 108.700000]: /communication_test:Receive from win(4):Hello this is Windows 4
-[INFO] [1626179898.722476, 109.700000]: /communication_test:Receive from win(5):Hello this is Windows 5
-...
-[INFO] [1626179902.746700, 113.700000]: /communication_test:Exiting
-```
+  ```shell
+  $ rosrun oit_pbl_ros_samples communication_test.py
+  ...
+  [INFO] [1626179893.690161, 104.700000]: /communication_test:Receive from win(1):Hello this is Windows 0
+  [INFO] [1626179894.692005, 105.700000]: /communication_test:Receive from win(2):Hello this is Windows 1
+  [INFO] [1626179896.709420, 107.700000]: /communication_test:Receive from win(3):Hello this is Windows 3
+  [INFO] [1626179897.713940, 108.700000]: /communication_test:Receive from win(4):Hello this is Windows 4
+  [INFO] [1626179898.722476, 109.700000]: /communication_test:Receive from win(5):Hello this is Windows 5
+  ...
+  [INFO] [1626179902.746700, 113.700000]: /communication_test:Exiting
+  ```
 
-Where is `Hello this is Windows 2` ? I don't know. It's missing.
-ROS style communication using publisher and subscriber is not so reliable.
-You have to consider this fact to integrate Windows and ROS programs. The most simple way is send same message multiple times.
+  - You'd think where is the message, `Hello this is Windows 2`. We can't know because the message is lost.
+  - Exchange communication using `publisher` and `subscriber` over the ROS is not so reliable.
+  - You have to consider that to integrate Windows and ROS programs. The most simple way is to send the same message multiple times.
 
-### Increase communication reliability
+## Practice(Complicated Interactions between windows side and ros side)
+<!-- - このPBLにおいては，ROS側からWindows側にメッセージを送ることで，通信がスタートする
+- 以降では，Windows sideでROS sideからの通信を待った後，交互にWindows siteとROS sideでメッセージを送りあう処理を実装する -->
+- Exchange communication will start when the starting message is sent from the Windows side to the ROS side, under this iPBL situation.
+- Hereafter, the program using exchange messages between the Windows side and the ROS side is implemented, after the above starting process has been done. 
 
-The wrapper classes have usefule methods.
-Add the following code to the programs.
+### Make a Windows side python program
+- Save the following two files into `C:\oit\py21\code` on Windows.
+  - If you want to download the files, click the following links and then download from a `Raw` button.
+  - [rps_game_win.py](./win/rps_game_win.py)
+    - This program has to run before any other programs, except that the navigation program(navigation.launch) runs.
+    - When executed, this program waits for messages from the ROS. 
+#### rps_game_win.py
+- This program's `main()` function waits a message "[rps]start" from the ROS side.
+  - For example, `message_from_ros = ros_bridge_tcp.wait_response(pub_msg, hand_types, timeout=30)` runs the following three steps
+    1. It sends message `pub_msg` to the ROS
+    1. It waits up to `timeout=30` seconds for a message that matching the string in `hand_types` to recieve. (* `hand_types` is the `list`, and it has any strings)
+    1. It store the recieved message in the `message_from_ros` if the message is recieved
+  - It is strongly recommended to prefix the messages sent/received with the prefix corresponding to the image processing game which is communicating with the ROS.
 
-- Windows side, `communication_with_ros_test.py`
+### Make a ROS node
+- Open `~/catkin_ws/` by Visual Studio Code editor, and add the following files into `~/catkin_ws/src/oit_pbl_ros_samples/scripts/`. See [Developing inside the ROS container with VSCode](https://github.com/oit-ipbl/portal/blob/main/setup/remote_with_vscode.md).
+  - If you want to download the files, click the following links and then download from the `Raw` button.
+  - [rps_game_ros.py](./ros/rps_game_ros.py)
+    - This program runs on the ROS container, and send the message to the Windows side.
 
-```python
-def main():
-    ros_bridge_tcp = RosBridgeTCP()
-    # publisher from windows
-    topic_name_from_win = "/from_windows"
-    advertise_msg = {
-        "op": "advertise",
-        "topic": topic_name_from_win,
-        "type": "std_msgs/String"
-    }
-    ros_bridge_tcp.send_message(advertise_msg)
-    # subscribe to ros topic
-    topic_name_from_ros = "/from_ros"
-    subscribe_msg = {
-        "op": "subscribe",
-        "topic": topic_name_from_ros,
-        "type": "std_msgs/String"
-    }
-    ros_bridge_tcp.send_message(subscribe_msg)
-    tm = time.time()
-    received = 0
-    while time.time() - tm < 20 and received < 10:
-        messages = ros_bridge_tcp.wait()
-        received += len(messages)
-        for m in messages:
-            print(str(m))
-    for i in range(0, 10):
-        message = "Hello this is windows " + str(i)
-        pub_msg = {
-            "op": "publish",
-            "topic": topic_name_from_win,
-            "msg": {"data": message}
-        }
-        ros_bridge_tcp.send_message(pub_msg)
-        print("Sending ros message: " + str(pub_msg))
-        time.sleep(1)
-    
-    # Add from here
-    hand_types = ["rock", "paper", "scissors"]
-    hand_type = random.choice(hand_types)
-    print("Windows side selected hand type '" + hand_type + "'")
-
-    # Send your hand type to ROS, and wait ROS robot's hand type.
-    pub_msg = {
-        "op": "publish",
-        "topic": topic_name_from_win,
-        "msg": {"data": hand_type}
-    }
-    # 1st argument: Message for publishing.
-    # 2nd argument: Target keywords to receive. Your program will wait until receiving one of the word in the array, 'hand_types'.
-    message_from_ros = ros_bridge_tcp.wait_response(pub_msg, hand_types, timeout=30)
-    if message_from_ros:
-        print("Receive from ROS:" + message_from_ros)
-
-    # Judge
-    result = random.choice(["win", "lose", "even"])
-    pub_msg = {
-        "op": "publish",
-        "topic": topic_name_from_win,
-        "msg": {"data": result}
-    }
-    # Send game result to ROS.
-    ros_bridge_tcp.wait_response(pub_msg, timeout=10)
-    # Add until here
-
-    try:
-        ros_bridge_tcp.terminate()
-        ros_bridge_tcp = None
-    except Exception as e:
-        print(str(e))
-```
-
-- ROS side, `communication_test.py`
+#### rps_game_ros.py
+- `play_rps_game` function of this program communicates with `rps_game_win.py` on Windows.
 
 ```python
-    def process(self):
-        node_name = rospy.get_name()
-        rospy.sleep(10)
-        rate = rospy.Rate(2)  # Keep loop with 2hz
-        to_win_pub = rospy.Publisher("/from_ros", String, queue_size=1)
-        messenger = RosWinMessenger(to_win_pub, "/from_windows")
+def play_rps_game():
+    rospy.sleep(3) 
+    node_name = rospy.get_name()
+    # Prepare to play rpsgame
+    # Specify topic names to commnicate with rps game
+    to_win_pub = rospy.Publisher("/from_ros", String, queue_size=1)
+    messenger = RosWinMessenger(to_win_pub, "/from_windows")
+    # Start game sequence
+    rospy.loginfo("%s:Try to start rps game", node_name)
 
-        # Publish message to windows
-        for i in range(0, 10):
-            message = "Hello! this is ROS " + str(i)
-            rospy.loginfo("%s:Sending message to win(%d):%s",
-                          node_name, i, message)
-            to_win_pub.publish(message)
-            rate.sleep()
-
-        # Receive message from windows
-        for i in range(0, 10):
-            message = messenger.wait_response(timeout=5)
-            if message is not None:
-                rospy.loginfo("%s:Receive from win(%d):%s",
-                              node_name, i, message)
-
-        # Add from here
-        # Select robot's hand_type
-        hand_types = ["rock", "paper", "scissors"]
-        hand_type = random.choice(hand_types)
-        rospy.loginfo("%s:Robot selects '%s'", node_name, hand_type)
-        # Send robot's choice to windows game Rock, Paper, Scissors, and wait game result
-        # 1st argument: Message for publishing.
-        # 2nd argument: Target keywords to receive. Your program will wait until receiving one of the word in the array, ["win", "lose", "even"].
-        message_from_win = messenger.wait_response(
-            hand_type, ["win", "lose", "even"], timeout=30)
-        if message_from_win:
-            rospy.loginfo("%s:Receive from win:%s",
+    # Send game start signal to Windows, and wait Windows side response.
+    message_from_win = messenger.wait_response(
+        "[rps]start", ["[rps]start"], timeout=30)
+    if message_from_win:
+        rospy.loginfo("%s:Receive from win:%s",
                           node_name, message_from_win)
-        # Add until here
+    else:
+        rospy.logerr("%s:Timeout. can't start rps game on windows", node_name)
+        return "[rps]timeout"
+
+    # Select robot's hand_type
+    hand_types = ["[rps]rock", "[rps]paper", "[rps]scissors"]
+    hand_type = random.choice(hand_types)
+    rospy.loginfo("%s:Robot selects '%s'", node_name, hand_type)
+
+    # Send hand_type chosen by robot to windows rps game, and wait game result
+    message_from_win = messenger.wait_response(
+        hand_type, ["[rps]win", "[rps]draw", "[rps]lose"], timeout=30)
+    if message_from_win:
+        rospy.loginfo("%s:Receive from win:%s",
+                    node_name, message_from_win)
+    else:
+        rospy.logerr(
+            "%s:Timeout. can't get rps game result on windows", node_name)
+        return "[rps]timeout"
+    rospy.sleep(3)
+    return message_from_win      
 ```
 
-Run the programs with same procedure mentioned above. You can see the outputs like this.
+### The execution order of these programs
+<!-- - もし起動していなければ，あなたはまずnavigation.launchをROSコンテナで起動しなければならない -->
+- At first, you have to run the navigation program on the ROS side if you have not run that yet.
 
-- Windows side
+```sh
+$ roslaunch oit_stage_ros navigation.launch
+```
+
+<!-- - 次に，Windows sideのプログラムを実行しましょう(rps_game_win.py)
+  - このプログラムはROSからのメッセージを無限ループで待ちます -->
+- You have to run the rps_game_win.py on the Windows side.
+    - This program waits for the messages from the ROS as the infinite loop after this program is running.
 
 ```cmd
-C:\oit\py21\code>python ./communication_with_ros_test.py
-{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 1'}, 'op': 'publish'}
-{'topic': '/from_ros', 'msg': {'data': 'Hello! this is ROS 2'}, 'op': 'publish'}
-...
-Sending ros message: {'op': 'publish', 'topic': '/from_windows', 'msg': {'data': 'Hello this is windows 8'}}
-Sending ros message: {'op': 'publish', 'topic': '/from_windows', 'msg': {'data': 'Hello this is windows 9'}}
-Windows side selected hand type 'scissors' # New output
-Receive from ROS:rock # New output
+C:\\...\code> python rps_game_win.py
 ```
 
-- ROS side
+<!-- - 最後に，ROS sideのプログラム（rps_game_ros.py）を実行しましょう
+  - このプログラムは最初に[rps]startというメッセージをWindows sideに送信します
+  - 実行権限を付与するのを忘れないこと-->
+- Finally, you have to run the `rps_game_ros.py` on the ROS side.
+    - This program sends the message, "\[ros\]start", to the Windows side.
+    - \[CAUTION\] This program has to give execute permission.
 
-```shell
-$ rosrun oit_pbl_ros_samples communication_test.py
-[INFO] [1626185350.386625, 5561.400000]: /communication_test:Started
-[INFO] [1626185360.397046, 5571.400000]: /communication_test:Sending message to win(0):Hello! this is ROS 0
-[INFO] [1626185360.885427, 5571.900000]: /communication_test:Sending message to win(1):Hello! this is ROS 1
-...
-[INFO] [1626185380.094479, 5591.100000]: /communication_test:Receive from win(8):Hello this is windows 7
-[INFO] [1626185382.111843, 5593.100000]: /communication_test:Receive from win(9):Hello this is windows 9
-[INFO] [1626185382.115293, 5593.100000]: /communication_test:Robot selects 'rock' # New output
-[INFO] [1626185385.136705, 5596.100000]: /communication_test:Receive from win:lose  # New output
-[INFO] [1626185385.140013, 5596.100000]: /communication_test:Exiting
+```sh
+$ chmod u+x rps_game_ros.py
+$ rosrun oit_pbl_ros_samples rps_game_ros.py
+```
+
+### Execution results
+<!-- - ROSsideの[rps]startメッセージをWindows sideが受信したあと，ゲームが実行されていることを確認しましょう -->
+- Please confirm that the game process is running after the Windows side has been received the message, "\[rps\] start", sending from the ROS side.
+
+#### Windows side
+```cmd
+Wait ROS messages...
+
+Receive from ROS: [rps]paper
+
+win_hand: [rps]paper    ros_hand: [rps]paper
+[rps]win
+```
+
+#### ROS side
+```sh
+the rosdep view is empty: call 'sudo rosdep init' and 'rosdep update'
+[INFO] [1627481095.838116, 3946.900000]: /rps_game_ros:Started
+---rps---
+[INFO] [1627481108.835301, 3959.900000]: /rps_game_ros:Try to start rps game
+[INFO] [1627481113.971241, 3965.000000]: /rps_game_ros:Receive from win:[rps]start
+[INFO] [1627481113.973128, 3965.000000]: /rps_game_ros:Robot selects '[rps]paper'
+[INFO] [1627481117.021211, 3968.000000]: /rps_game_ros:Receive from win:[rps]win
+[INFO] [1627481129.951446, 3981.000000]: /rps_game_ros:Exiting
 ```
 
 The wrapper class, `RosBridgeTCP` and `RosWinMessenger`, have `wait_response` method.
 The method can specify target keywords to receive as the 2nd argument, and block the program until receiving one of the keywords.
 The samples use this method and implement a dummy Rock, Paper and Scissors game.
-
-## Exercise (integration 1)
-
-The Windows program choice game result rondomly. See `communication_with_ros_test.py`.
-
-```python
-    # Judge
-    result = random.choice(["win", "lose", "even"])
-    pub_msg = {
-        "op": "publish",
-        "topic": topic_name_from_win,
-        "msg": {"data": result}
-    }
-    # Send game result to ROS.
-    ros_bridge_tcp.wait_response(pub_msg, timeout=10)
-```
-
-However, the Windows side program knows both robot's hand type and Windows side hand type, that is selected randomly.  
-Modify the program to return correct judgement result, which is led from the both hand types.  
-Of-course, the result should be send from Windows to ROS.

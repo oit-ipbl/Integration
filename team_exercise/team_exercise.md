@@ -83,7 +83,7 @@ If you and your team members have no ideas, the following list may help you.
   - You need to create and publish at least one video.
   - The all students should appear in the video. (If it is difficult, voice appearance is acceptable)
   - Please take care of the copyrights.
-  - Time length is not limited, but 10 minutes or less is desirable.
+  - Time length is not limited, but 5 minutes or less is desirable.
 - We plan to release all team videos somewhere between August 21-28.
 - Please watch the videos of the other teams with team members, and vote through team discussion for the top three videos that make you want to try the food introduced. (i.e. Each team has three voting points)
 - Upload your video as "Unlisted" or "Public" (in Japanese, "限定公開" or "公開") to youtube.

@@ -19,7 +19,7 @@ Additionaly, all teams have to submit a slide to explain the mini-game.
     - [Message exchange between a Windows program and a ROS node](win_single/win_single.md)
     - [Message exchange between a ROS node and multi Windows programs](win_multi/win_multi.md)
 
-## deadline and product submission
+## Deadline and product submission
 - You have to finish the following Team Exercise 1 and 2 until Aug. 20.
   - After Aug.21, we will hold a social event on oVice where each team will display their work and vote for each other's work.
   - Details of the social event will be posted on Slack and this page in the future.
@@ -85,6 +85,5 @@ If you and your team members have no ideas, the following list may help you.
   - Please take care of the copyrights.
   - Time length is not limited, but 10 minutes or less is desirable.
 - We plan to release all team videos somewhere between August 21-28.
-- Everyone will watch the videos of the other teams and votes for the video that makes them want to try the foods the most.
-  -  
+- Please watch the videos of the other teams with team members, and vote through team discussion for the top three videos that make you want to try the food introduced. (i.e. Each team has three voting points)
 - Upload your video as "Unlisted" or "Public" (in Japanese, "限定公開" or "公開") to youtube.

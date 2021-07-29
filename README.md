@@ -9,12 +9,12 @@
   - [Message exchange between a ROS node and multi Windows programs](win_multi/win_multi.md)
   - [Team exercise](team_exercise/team_exercise.md)
 
-## deadline
-- About Team exercise, you must submit the slide, programs and youtube video url.
-- Submission form URL will open after Aug. 9.
-- The URL and submission method will be published at SLACK #general channel.
-- You have to submit the products until Aug. 20.
- 
+## Deadline and product submission
+- You have to finish the two Team Exercise until Aug. 20.
+  - After Aug.21, we will hold a social event on oVice where each team will display their work and vote for each other's work.
+  - Details of the social event will be posted on Slack and this page in the future.
+- Submit your team presentation slide(Exercise1) and youtube video url(Exercise2) through MS forms(will open in 8/9). 
+
 ## Notice
 
 - You may see the warning like this while executing the programs in this texts, but it's no probrem.

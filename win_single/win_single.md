@@ -19,8 +19,8 @@ You have to finish all of [robots](https://github.com/oit-ipbl/robots) and [imag
 
 - Save the following two files into `C:\oit\py21\code` on Windows.
   - If you want to download the files, click the following links and click a `Raw` button. After that, right-click on the screen, select the save a page to a file with a new name.
-    - [ros_utils.py](https://raw.githubusercontent.com/oit-ipbl/Integration/main/ros_utils.py?token=AAOIT6P3QT2X54UTN6FAHLLA72Z3M)
-    - [rosbridge_tcp.py](https://raw.githubusercontent.com/oit-ipbl/Integration/main/rosbridge_tcp.py?token=AAOIT6PZGCQYHDAXF2DTVZ3A72Z7A)
+    - [ros_utils.py](../ros_utils.py)
+    - [rosbridge_tcp.py](../rosbridge_tcp.py)
 - Install `bson` package into the image processing development environment by using the following command.
   ```
   C:\\...\code> python -m pip install bson

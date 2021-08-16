@@ -10,7 +10,7 @@
   - [Team exercise](team_exercise/team_exercise.md)
 
 ## Deadline and product submission
-- You have to finish the two Team Exercise until Aug. 20.
+- You have to finish the two Team Exercises until Aug. 20.
   - After Aug.21, we will hold a social event on oVice where each team will display their work and vote for each other's work.
   - Details of the social event will be posted on Slack and this page in the future.
 - Submit your team presentation slide(Exercise1) and youtube video url(Exercise2) through MS forms(will open in 8/9). 

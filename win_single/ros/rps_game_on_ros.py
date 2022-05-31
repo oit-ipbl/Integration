@@ -61,7 +61,7 @@ def demo():
 
     rospy.loginfo("%s:Exiting", rospy.get_name())
 
-# If you want to test this program only, please execute "rosrun oit_pbl_ros_samples rps_game_ros.py" 
+# If you want to test this program, please execute "rosrun oit_pbl_ros_samples rps_game_on_ros.py" 
 if __name__ == '__main__':
     try:
         demo()

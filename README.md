@@ -1,8 +1,8 @@
 # Integration
 
-- You have to read all documents.
-- You have to do `practice` tasks and `exercise` tasks which are in each section.
-- We strongly recommend all students read the documents on all exercises because there would be many hints or important information helping you done the final development for iPBL.
+- You have to do all the following `Pre-learning Assignments`.
+  - We strongly recommend all students read the documents on all exercises because there would be many hints or important information helping you done the final development for iPBL.
+- The following sample programs will help you develop more advanced communication programs between windows side and ros side. Work with your team members to try out the samples.
 
 - Pre-learning Assignments
   - [Message exchange between a python program running on Windows and a ROS node running on ubuntu](win_single/win_single.md)

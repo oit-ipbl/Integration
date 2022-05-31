@@ -27,6 +27,7 @@ This page explains how to make communication games using message exchange betwee
     1. It waits up to `timeout=30` seconds for a message that matching the string in `hand_types` to recieve. (* `hand_types` is the `list`, and it has string message)
     1. It stores the recieved message in the `message_from_ros` if the message is recieved
   - It is strongly recommended to prefix the messages sent/received with the prefix corresponding to the communication games.
+- judge_game function compares win_hand and ros_hand to determine the winner. Let's try to complete it.
 
 ### Make a ROS node
 - Open `~/catkin_ws/` by Visual Studio Code editor, and add the following files into `~/catkin_ws/src/oit_pbl_ros_samples/scripts/`. See [Developing inside the ROS container with VSCode](https://github.com/oit-ipbl/portal/blob/main/setup/remote_with_vscode.md).

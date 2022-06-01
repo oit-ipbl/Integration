@@ -6,7 +6,7 @@ import random
 import rospy
 from std_msgs.msg import String
 from utils import RosWinMessenger
-import show_hand_game_ros as shgr
+import show_hand_game_on_ros as shgr
 
 def end_game():
     rospy.sleep(3)

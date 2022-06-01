@@ -6,9 +6,9 @@ import random
 import rospy
 from std_msgs.msg import String
 from utils import RosWinMessenger
-import show_hand_game_ros as shgr
-import bright_dark_game_ros as bdg
-import move_robot as mrobot
+import show_hand_game_on_ros as shgr
+import bright_dark_game_on_ros as bdg
+import move_robot_on_ros as mrobot
 
 def end_game():
     rospy.sleep(3)

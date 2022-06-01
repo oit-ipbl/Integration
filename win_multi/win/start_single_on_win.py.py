@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #!!!!!This program must be executed on windows python3 environment!!!!!
 from rosbridge_tcp import RosBridgeTCP
-import show_hand_game_win as shgw #Image Processing Program that communicate with ROS
+import show_hand_game_on_win as shgw #Image Processing Program that communicate with ROS
 
 def main():
 	# Wrapper class for TCP/IP communication

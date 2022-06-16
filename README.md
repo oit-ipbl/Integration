@@ -18,7 +18,7 @@
 [WARN] [1626227423.468573, 2825.100000]: Inbound TCP/IP connection failed: connection from sender terminated before handshake header received. 0 bytes were received. Please check sender for additional details.
 ```
 
-- We provide wrapper classes to simplify the commnication process between ROS and Windows. If you feel any inconvenience for our wrappers, modify them freely.
+- We provide wrapper classes to simplify the communication process between ROS and Windows. If you feel any inconvenience for our wrappers, modify them freely.
 
 ### 以下削除
 

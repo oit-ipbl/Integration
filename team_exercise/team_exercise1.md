@@ -21,7 +21,7 @@
 - The rules are as follows.
   - English only (exclude name of foods)
   - Your team need to introduce at least one Japanese and Thai food in your video.
-  - **OIT** students should cook and introduce **Thai food** and **SIIT** students should cook and introduce **Japanese food**.
+  - :o: **OIT** students should cook and introduce **Thai food** and :o: **SIIT** students should cook and introduce **Japanese food**.
   - Please consult with each other carefully before deciding which dish to introduce.
   - You need to create and publish at least one video.
     - Upload your video as "Unlisted" or "Public" (in Japanese, "限定公開" or "公開") to youtube.

@@ -14,7 +14,7 @@
   - [integration ](https://github.com/oit-ipbl/Integration)
 
 ## Deadline and product submission
-- Your team has to create youtube videos until 8/17
+- Your team has to create a youtube video until 8/17
 
 ## Exercise1 (Cross-cultural communication and creating youtube video)
 - Let's create a video to cook and introduce the foods in each other's country and publish it on youtube.

@@ -9,7 +9,7 @@
   - [Message exchange between a ROS node and multi Windows programs](win_multi/win_multi.md)
 
 ## Sample Programs
-  - [Rock-paper-scissors game](win_single/rps.md)
+  - [Rock-paper-scissors game](samples/rps.md)
 
 > **Note**
 - You may see the warning like this while executing the programs in this texts, but it's no probrem.

@@ -16,7 +16,7 @@ This page explains how to make communication games using message exchange betwee
 ### Make a Windows side python program
 - Save the following two files into `C:\oit\py22_ipbl\code` on Windows.
   - If you want to download the files, click the following links and then download from a `Raw` button.
-  - [rps_game_on_win.py](./win/rps_game_on_win.py)
+  - [rps_game_on_win.py](../win_single/win/rps_game_on_win.py)
     - This program has to run before any other programs, except that the navigation program(navigation.launch) runs.
     - When executed, this program waits for messages from the ROS. 
 
@@ -32,7 +32,7 @@ This page explains how to make communication games using message exchange betwee
 ### Make a ROS node
 - Open `~/catkin_ws/` by Visual Studio Code editor, and add the following files into `~/catkin_ws/src/oit_pbl_ros_samples/scripts/`. See [Developing inside the ROS container with VSCode](https://github.com/oit-ipbl/portal/blob/main/setup/remote_with_vscode.md).
   - If you want to download the files, click the following links and then download from the `Raw` button.
-  - [rps_game_on_ros.py](./ros/rps_game_on_ros.py)
+  - [rps_game_on_ros.py](../win_single/ros/rps_game_on_ros.py)
     - This program runs on the ROS container, and send the message to the Windows side.
 
 #### rps_game_on_ros.py

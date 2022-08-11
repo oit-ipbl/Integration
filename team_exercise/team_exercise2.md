@@ -15,8 +15,8 @@ Additionaly, all teams have to submit a slide to explain the mini-game.
   - [robots](https://github.com/oit-ipbl/robots)
   - [image processing](https://github.com/oit-ipbl/image_processing)
   - integration
-    - [Message exchange between a Windows program and a ROS node](win_single/win_single.md)
-    - [Message exchange between a ROS node and multi Windows programs](win_multi/win_multi.md)
+    - [Message exchange between a python program running on Windows and a ROS node running on ubuntu](../win_single/win_single.md)
+    - [Message exchange between a ROS node and multi Windows programs](../win_multi/win_multi.md)
 
 ## Deadline
 
@@ -24,7 +24,7 @@ Additionaly, all teams have to submit a slide to explain the mini-game.
 - The URL and submission method will be published at SLACK #general channel.
 - You have to submit the products until Aug. 20.
 
-## Exercise1 (team development)
+## Team development
 
 - Implement one mini-game, which includes windows side image processing technology and ROS side robotics technology.
   - The mini-game must contains at least two image processing games, and at least one robot movement on ROS.

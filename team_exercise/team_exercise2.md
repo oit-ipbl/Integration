@@ -20,9 +20,9 @@ Additionaly, all teams have to submit a slide to explain the mini-game.
 
 ## Deadline
 
-- The slide, programs and youtube video url submission URL will open after Aug. 9.
+- Submission URL for the poster introducing the game under development will open after Aug. 17.
 - The URL and submission method will be published at SLACK #general channel.
-- You have to submit the products until Aug. 20.
+- You have to submit the poster until Aug. 26.
 
 ## Team development
 

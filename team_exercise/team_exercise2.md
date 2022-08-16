@@ -58,7 +58,7 @@ If you and your team members have no ideas, the following list may help you.
 
 **Make interesting games!**
 
-- Make a presentation slide which explains your games.
+- Make a poster which explains your games.
 
   - Team name and member list.
   - Overview of the mini game created by tour team.

@@ -19,5 +19,5 @@ while True:
         break
 
 tello.streamoff()
-tello.end()
+
 ```

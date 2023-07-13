@@ -19,5 +19,5 @@ while True:
         break
 
 tello.streamoff()
-cv2.destroyAllWindows()
+tello.end()
 ```

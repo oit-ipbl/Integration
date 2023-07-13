@@ -1,6 +1,6 @@
 # Integration
 
-'''python
+```python
 import cv2
 from djitellopy import Tello
 
@@ -23,4 +23,4 @@ tello.streamoff()
 
 
 cv2.destroyAllWindows()
-'''
+```

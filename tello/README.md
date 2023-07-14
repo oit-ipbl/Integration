@@ -44,7 +44,7 @@ while True:
     frame = tello.get_frame_read().frame
 
     cv2.imshow("Tello Video", frame)
-    tello.rotate_counter_clockwise(10)
+    tello.rotate_counter_clockwise(20)
 
     if cv2.waitKey(1) == ord('q'):
         break

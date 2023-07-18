@@ -145,11 +145,10 @@ while True:
         break
 tello.streamoff()
 
-cv2.destroyAllWindows()
-tello.end()
+
 ```
 
-## Stop when you see red
+## Stop when tello find red
 
 ### sample05.py
 
@@ -206,6 +205,4 @@ while True:
 tello.streamoff()
 
 tello.land()
-
-cv2.destroyAllWindows()
 ```

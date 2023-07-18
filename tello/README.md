@@ -91,7 +91,7 @@ tello.streamoff()
 cv2.destroyAllWindows()
 tello.end()
 ```
-## Find the red
+## Enclose the red area
 
 ### sample04.py
 ```python
@@ -148,7 +148,7 @@ tello.streamoff()
 
 ```
 
-## Stop when tello find red
+##  Find red
 
 ### sample05.py
 

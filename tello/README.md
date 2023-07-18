@@ -27,9 +27,40 @@ cv2.destroyAllWindows()
 
 tello.end()
 ```
-## color piker
+
+## Tello Rotate
 
 ### sample02.py
+
+```python
+import cv2
+from djitellopy import Tello
+
+tello = Tello()
+
+tello.connect()
+
+tello.streamon()
+tello.takeoff()
+while True:
+    frame = tello.get_frame_read().frame
+
+    cv2.imshow("Tello Video", frame)
+    tello.rotate_counter_clockwise(20)
+
+    if cv2.waitKey(1) == ord('q'):
+        break
+
+tello.streamoff()
+tello.land()
+
+cv2.destroyAllWindows()
+```
+
+
+## color piker
+
+### sample03.py
 ```python
 import cv2
 import numpy as np
@@ -64,34 +95,4 @@ while True:
 tello.streamoff()
 cv2.destroyAllWindows()
 tello.end()
-```
-
-
-## Tello Rotate
-
-### sample03.py
-
-```python
-import cv2
-from djitellopy import Tello
-
-tello = Tello()
-
-tello.connect()
-
-tello.streamon()
-tello.takeoff()
-while True:
-    frame = tello.get_frame_read().frame
-
-    cv2.imshow("Tello Video", frame)
-    tello.rotate_counter_clockwise(20)
-
-    if cv2.waitKey(1) == ord('q'):
-        break
-
-tello.streamoff()
-tello.land()
-
-cv2.destroyAllWindows()
 ```

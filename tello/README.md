@@ -97,3 +97,59 @@ tello.streamoff()
 cv2.destroyAllWindows()
 tello.end()
 ```
+## find red
+
+```python
+from djitellopy import Tello
+import cv2
+
+import time
+tello = Tello()
+
+tello.connect()
+
+tello.streamon()
+
+cv2.namedWindow("Tracking")
+
+#lower_red = (0, 50, 50)
+#upper_red = (15, 200, 200)
+
+
+while True:
+    frame = tello.get_frame_read().frame
+    frame = cv2.resize(frame, (720, 480))
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    
+    #mask = cv2.inRange(hsv, lower_red, upper_red)
+
+    hsv_min = (0, 70, 70)
+    hsv_max = (15, 255, 255)
+    mask1 = cv2.inRange(hsv, hsv_min, hsv_max)
+ 
+    hsv_min = (160, 70, 70)
+    hsv_max = (179, 255, 255)
+    mask2 = cv2.inRange(hsv, hsv_min, hsv_max)
+ 
+    mask = mask1 + mask2
+    
+    contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    
+    if contours:
+        largest_contour = max(contours, key=cv2.contourArea)
+        if cv2.contourArea(largest_contour) > 500: 
+            x, y, w, h = cv2.boundingRect(largest_contour)
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
+            print("Area = {}".format(cv2.contourArea(largest_contour)) )
+            print("(x ,y)=({},{})".format(x+w/2,y+h/2))
+            #time.sleep(1)
+    
+    cv2.imshow("Tracking", frame)
+    key = cv2.waitKey(1)
+    if key == ord('q'):
+        break
+tello.streamoff()
+
+cv2.destroyAllWindows()
+tello.end()
+```

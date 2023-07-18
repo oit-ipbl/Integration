@@ -97,7 +97,7 @@ tello.streamoff()
 cv2.destroyAllWindows()
 tello.end()
 ```
-## find red
+## Find the red
 
 ### sample04.py
 ```python

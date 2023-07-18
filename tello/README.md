@@ -58,7 +58,8 @@ cv2.destroyAllWindows()
 ```
 
 
-## color piker
+## Color Picker
+The following code displays the rgp and hsv values around the clicked location in Tello.
 
 ### sample03.py
 ```python

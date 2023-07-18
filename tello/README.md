@@ -49,8 +49,6 @@ while True:
 
 tello.streamoff()
 tello.land()
-
-cv2.destroyAllWindows()
 ```
 
 

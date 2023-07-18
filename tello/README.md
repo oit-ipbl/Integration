@@ -152,7 +152,7 @@ tello.streamoff()
 
 ### sample05.py
 
-```pyhton
+```python
 from djitellopy import Tello
 import cv2
 import time

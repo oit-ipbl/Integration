@@ -25,7 +25,7 @@ tello.streamoff()
 ```
 
 ## Tello Rotate
-
+The following code rotates Tello by 30 degrees. Run the code to check Telle and OpenCV.
 ### sample02.py
 
 ```python
@@ -54,7 +54,7 @@ tello.land()
 
 ## Color Picker
 The following code displays the rgp and hsv values around the clicked location in Tello.
-
+Run the code to check Telle and OpenCV.
 ### sample03.py
 ```python
 import cv2
@@ -92,7 +92,7 @@ cv2.destroyAllWindows()
 tello.end()
 ```
 ## Enclose the red area
-
+The following code encloses the area of red colour, if any, in the video. Run the code to check Telle and OpenCV.
 ### sample04.py
 ```python
 from djitellopy import Tello
@@ -149,7 +149,7 @@ tello.streamoff()
 ```
 
 ##  Find red
-
+The following code rotates Tello 30 degrees at a time until it finds the colour red. When Tello finds red, it stops rotating and stops above the sky. 
 ### sample05.py
 
 ```python

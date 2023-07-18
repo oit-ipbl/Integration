@@ -1,5 +1,5 @@
 # Integration
-
+On this page you will learn how to use opencv and DJItellopy in an integrated way. Students who have already learned opencv can start from this page.
 ## Tello Video
 
 ### sample01.py

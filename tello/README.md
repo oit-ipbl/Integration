@@ -51,25 +51,18 @@ def mouse_event(event, x, y, flg, prm):
 
 
 tello = Tello()
-
 tello.connect()
-
-
 tello.streamon()
 
 while True:
     frame = tello.get_frame_read().frame
-    
     cv2.imshow("Tello Video", frame)
     cv2.setMouseCallback('Tello Video', mouse_event)
-
     if cv2.waitKey(1) == ord('q'):
         break
 
 tello.streamoff()
-
 cv2.destroyAllWindows()
-
 tello.end()
 ```
 

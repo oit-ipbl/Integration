@@ -181,9 +181,16 @@ while True:
     
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     
-    mask = cv2.inRange(hsv, lower_red, upper_red)
+    hsv_min = (0, 70, 70)
+    hsv_max = (15, 255, 255)
+    mask1 = cv2.inRange(hsv, hsv_min, hsv_max)
+ 
+    hsv_min = (160, 70, 70)
+    hsv_max = (179, 255, 255)
+    mask2 = cv2.inRange(hsv, hsv_min, hsv_max)
+ 
+    mask = mask1 + mask2
     
-
     contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     
 

@@ -168,7 +168,6 @@ tello = Tello()
 tello.connect()
 tello.streamon()
 
-print(f"Battery: {tello.get_battery()}%")
 tello.takeoff()
 
 cv2.namedWindow("Tracking")
@@ -198,7 +197,6 @@ while True:
 
         largest_contour = max(contours, key=cv2.contourArea)
         if cv2.contourArea(largest_contour) > 1000: 
-            # 輪郭を囲む矩形を描画する
             x, y, w, h = cv2.boundingRect(largest_contour)
             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
             print(cv2.contourArea(largest_contour) )

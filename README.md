@@ -15,7 +15,7 @@ tello.streamon()
 
 while True:
     frame = tello.get_frame_read().frame
-
+    frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
     cv2.imshow("Tello Video", frame)
 
     if cv2.waitKey(1) == ord('q'):
@@ -40,7 +40,7 @@ tello.streamon()
 tello.takeoff()
 while True:
     frame = tello.get_frame_read().frame
-
+    frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
     cv2.imshow("Tello Video", frame)
     tello.rotate_counter_clockwise(20)
 
@@ -82,6 +82,7 @@ tello.streamon()
 
 while True:
     frame = tello.get_frame_read().frame
+    frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
     cv2.imshow("Tello Video", frame)
     cv2.setMouseCallback('Tello Video', mouse_event)
     if cv2.waitKey(1) == ord('q'):
@@ -113,6 +114,7 @@ cv2.namedWindow("Tracking")
 
 while True:
     frame = tello.get_frame_read().frame
+    frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
     frame = cv2.resize(frame, (720, 480))
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     
@@ -168,7 +170,7 @@ cv2.namedWindow("Tracking")
 
 while True:
     frame = tello.get_frame_read().frame
-        
+    frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
     frame = cv2.resize(frame, (720, 480))
     
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)

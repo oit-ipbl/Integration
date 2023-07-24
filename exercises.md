@@ -1,7 +1,7 @@
 # Exercises
 
 ## Prohibition
-Don't change the speeet of the tello.
+Don't change the speed of the tello.
 
 ## 2ndDay Exercises
 

@@ -1,5 +1,8 @@
 # Exercises
 
+## Prohibition
+Don't change the speeet of the tello.
+
 ## 2ndDay Exercises
 
 1. Create a code to draw equilateral triangles in the air using Tello.

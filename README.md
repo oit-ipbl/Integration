@@ -8,9 +8,7 @@ import cv2
 from djitellopy import Tello
 
 tello = Tello()
-
 tello.connect()
-
 tello.streamon()
 
 while True:
@@ -33,11 +31,10 @@ import cv2
 from djitellopy import Tello
 
 tello = Tello()
-
 tello.connect()
-
 tello.streamon()
 tello.takeoff()
+
 while True:
     frame = tello.get_frame_read().frame
     frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
@@ -101,16 +98,12 @@ import cv2
 
 import time
 tello = Tello()
-
 tello.connect()
-
 tello.streamon()
-
 cv2.namedWindow("Tracking")
 
 #lower_red = (0, 50, 50)
 #upper_red = (15, 200, 200)
-
 
 while True:
     frame = tello.get_frame_read().frame
@@ -162,11 +155,8 @@ import time
 tello = Tello()
 tello.connect()
 tello.streamon()
-
 tello.takeoff()
-
 cv2.namedWindow("Tracking")
-
 
 while True:
     frame = tello.get_frame_read().frame

@@ -1,5 +1,5 @@
 # Exercises
-
+Complete the following exercise using Tello.
 ## Prohibition
 Don't change the speed of the tello.
 

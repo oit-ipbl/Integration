@@ -201,5 +201,5 @@ tello.land()
 ```
 
 ## Exercises
-1. Make a code for tello to look for red and go straight to it.
-2. Make a code for the tello to land near the red color after accomplishing 1.
+1. Make a code for tello to look for Red, Blue or Green and go straight to it.
+2. Make a code for the tello to land near the Red, Blue or Green after accomplishing 1.

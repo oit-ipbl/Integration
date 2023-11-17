@@ -186,7 +186,7 @@ while True:
             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
             print(cv2.contourArea(largest_contour) )
             print(x+w/2,y+h/2)
-            tello.send_rc_control(0, 10, -10, 0)
+            tello.send_rc_control(0, 0, 0, 0)
         else:
             tello.rotate_clockwise(30)
     cv2.imshow("Tracking", frame)

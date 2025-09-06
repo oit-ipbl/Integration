@@ -20,6 +20,7 @@ while True:
         break
 
 tello.streamoff()
+tello.end()
 ```
 
 ## Tello Rotate
@@ -46,6 +47,7 @@ while True:
 
 tello.streamoff()
 tello.land()
+tello.end()
 ```
 
 
@@ -139,8 +141,7 @@ while True:
     if key == ord('q'):
         break
 tello.streamoff()
-
-
+tello.end()
 ```
 
 ##  Find red
@@ -198,6 +199,7 @@ while True:
 tello.streamoff()
 
 tello.land()
+tello.end()
 ```
 
 ## Exercises
